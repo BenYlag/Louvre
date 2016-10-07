@@ -3,6 +3,7 @@
 namespace LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Ticket
@@ -25,6 +26,10 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\Length(
+     *     min = 2,
+     *     minMessage="order.error.minName"
+     * )
      */
     private $name;
 
@@ -32,6 +37,10 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=255)
+     * @Assert\Length(
+     *     min = 2,
+     *     minMessage="order.error.minSurname"
+     * )
      */
     private $surname;
 
@@ -39,6 +48,7 @@ class Ticket
      * @var \DateTime
      *
      * @ORM\Column(name="birth", type="date")
+     * @Assert\Date()
      */
     private $birth;
 

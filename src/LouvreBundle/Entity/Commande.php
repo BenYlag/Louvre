@@ -3,7 +3,8 @@
 namespace LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * Commande
@@ -33,6 +34,9 @@ class Commande
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=255)
+     * @Assert\Email(
+     *     message = "order.error.email",
+     *     )
      */
     private $email;
 
@@ -40,6 +44,12 @@ class Commande
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date")
+     * @Assert\Range(
+     *     min ="today",
+     *     max ="+2 years",
+     *     minMessage="order.error.mindate",
+     *     maxMessage="order.error.maxdate"
+     * )
      */
     private $date;
 
@@ -206,7 +216,7 @@ class Commande
      *
      * @return Commande
      */
-    public function addTicket(\LouvreBundle\Entity\Ticket $ticket)
+    public function addTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
 
@@ -220,7 +230,7 @@ class Commande
      *
      * @param \LouvreBundle\Entity\Ticket $ticket
      */
-    public function removeTicket(\LouvreBundle\Entity\Ticket $ticket)
+    public function removeTicket(Ticket $ticket)
     {
         $this->tickets->removeElement($ticket);
     }
@@ -233,5 +243,28 @@ class Commande
     public function getTickets()
     {
         return $this->tickets;
+    }
+    /**
+     * @Assert\Callback
+     */
+    public function validate(ExecutionContextInterface $context) {
+        $leJour =$this->getDate()->format('N');
+        if ($leJour == 2) {
+            $context->buildViolation('order.error.tuesday')
+                ->atPath('date')
+                ->addViolation();
+        }
+        $maintenant = date("H");
+        $maintenant = (int)$maintenant;
+        $jourResa = $this->getDate();
+        $jourResa = $jourResa->format('d/m/Y');
+        $aujourdhui = new \DateTime('today');
+        $aujourdhui = $aujourdhui->format('d/m/Y');
+
+        if (($jourResa == $aujourdhui) && (!$this->getDuree()) && ($maintenant > 13)) {
+            $context->buildViolation('order.error.hour')
+                ->atPath('duree')
+                ->addViolation();
+        }
     }
 }
