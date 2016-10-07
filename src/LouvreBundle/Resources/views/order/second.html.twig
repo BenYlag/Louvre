@@ -1,0 +1,26 @@
+{%  extends "LouvreBundle:home:index.html.twig" %}
+
+{% block body %}
+Récap commande :
+    {{ commande.name }}
+    <br/>
+    {{ commande.email }}
+    <br/>
+    {{ commande.date|date('d/m/Y') }}
+    <br/>
+    {{ commande.duree }}
+    <br/>
+    {% for ticket in commande.tickets %}
+        {{ ticket.name }} {{ ticket.surname }} {{ ticket.price.value }}
+        <br/>
+    {% endfor %}
+
+    <a href="{{ path('editOrder', {'name': commande.name}) }}">Modifier ma commande</a>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{{ asset('js/order.js') }}"></script>
+{% endblock %}

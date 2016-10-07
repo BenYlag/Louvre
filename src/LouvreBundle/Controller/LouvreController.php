@@ -19,7 +19,7 @@ class LouvreController extends Controller
     }
 
     /**
-     * @Route("/order")
+     * @Route("/order", name="createOrder")
      */
     public function orderAction(Request $request)
     {
@@ -48,13 +48,63 @@ class LouvreController extends Controller
             $em->persist($commande);
             $em->flush();
 
-            return $this->render('LouvreBundle:order:first.html.twig', array(
-                'form' => $form->createView(),
+            return $this->redirectToRoute('resumeOrder', array(
+                'name' => $commande->getName(),
+            ));
+
+        }
+
+        return $this->render('LouvreBundle:order:first.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/order/edit/{name}", name="editOrder")
+     */
+    public function orderEditAction(Request $request, Commande $commande)
+    {
+        $form = $this->get('form.factory')->create(CommandeType::class,$commande);
+
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $serial = $this
+                ->container
+                ->get('louvre.orderserial')
+                ->createSerial();
+            $commande->setName($serial);
+            $commande->setPayment('null');
+
+            $tickets = $form->get('tickets')->getData();
+            foreach ($tickets as $ticket) {
+                $price = $this
+                    ->container
+                    ->get('louvre.ticketprice')
+                    ->Pricing($ticket->getBirth(), $ticket->getDiscount());
+                $ticket->setCommande($commande);
+                $ticket->setPrice($price);
+            }
+
+            $em->persist($commande);
+            $em->flush();
+
+            return $this->redirectToRoute('resumeOrder', array(
+                'name' => $commande->getName(),
             ));
         }
 
         return $this->render('LouvreBundle:order:first.html.twig', array(
             'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/order/resume/{name}", name="resumeOrder")
+     */
+    public function orderResumeAction(Request $request, Commande $commande)
+    {
+        return $this->render('LouvreBundle:order:second.html.twig', array(
+            'commande' => $commande,
         ));
     }
 }

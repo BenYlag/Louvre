@@ -245,6 +245,7 @@ class Commande
     {
         return $this->tickets;
     }
+
     /**
      * @Assert\Callback
      */
@@ -262,7 +263,7 @@ class Commande
         $aujourdhui = new \DateTime('today');
         $aujourdhui = $aujourdhui->format('d/m/Y');
 
-        if (($jourResa == $aujourdhui) && (!$this->getDuree()) && ($maintenant > 13)) {
+        if (($jourResa == $aujourdhui) && (!$this->getDuree()) && ($maintenant > 12)) {
             $context->buildViolation('order.error.hour')
                 ->atPath('duree')
                 ->addViolation();
