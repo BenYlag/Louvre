@@ -1,5 +1,14 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
 
 {% block body %}
-test
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <a href="#" id="add_ticket">Ajouter un billet</a>
+    <input type="submit"/>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{{ asset('js/order.js') }}"></script>
 {% endblock %}
