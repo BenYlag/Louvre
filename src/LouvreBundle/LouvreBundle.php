@@ -1,9 +1,9 @@
 <?php
 
-namespace AppBundle;
+namespace LouvreBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class AppBundle extends Bundle
+class LouvreBundle extends Bundle
 {
 }
