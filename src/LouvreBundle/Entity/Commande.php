@@ -69,6 +69,7 @@ class Commande
 
     /**
      * @ORM\OneToMany(targetEntity="LouvreBundle\Entity\Ticket", mappedBy="commande", cascade={"persist", "remove"})
+     * @Assert\Valid()
      */
     private $tickets;
 
