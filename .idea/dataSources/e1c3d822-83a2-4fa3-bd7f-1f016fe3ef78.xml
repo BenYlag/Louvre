@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - louvre@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="louvre">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema"/>
+    <schema id="3" name="microcms"/>
+    <schema id="4" name="minichat"/>
+    <schema id="5" name="mybooks"/>
+    <schema id="6" name="mysql"/>
+    <schema id="7" name="oclouvre"/>
+    <schema id="8" name="performance_schema"/>
+    <schema id="9" name="poo"/>
+    <schema id="10" name="selestat"/>
+    <schema id="11" name="symfony"/>
+    <schema id="12" name="symfony2"/>
+    <schema id="13" name="symfony3"/>
+    <schema id="14" name="symfony4"/>
+    <schema id="15" name="sys"/>
+    <schema id="16" name="test"/>
+    <schema id="17" name="tp_membre"/>
+    <schema id="18" name="weblinks"/>
+    <schema id="19" name="wordpress"/>
+  </database-model>
+</dataSource>

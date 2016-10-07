@@ -49,6 +49,17 @@ class Ticket
      */
     private $discount;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="LouvreBundle\Entity\Commande", inversedBy="tickets", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $commande;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="LouvreBundle\Entity\Price")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $price;
 
     /**
      * Get id
@@ -155,5 +166,52 @@ class Ticket
     {
         return $this->discount;
     }
-}
 
+    /**
+     * Set commande
+     *
+     * @param \LouvreBundle\Entity\Commande $commande
+     *
+     * @return Ticket
+     */
+    public function setCommande(\LouvreBundle\Entity\Commande $commande)
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+     * Get commande
+     *
+     * @return \LouvreBundle\Entity\Commande
+     */
+    public function getCommande()
+    {
+        return $this->commande;
+    }
+
+    /**
+     * Set price
+     *
+     * @param \LouvreBundle\Entity\Price $price
+     *
+     * @return Ticket
+     */
+    public function setPrice(\LouvreBundle\Entity\Price $price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price
+     *
+     * @return \LouvreBundle\Entity\Price
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+}

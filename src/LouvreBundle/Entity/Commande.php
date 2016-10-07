@@ -4,6 +4,7 @@ namespace LouvreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * Commande
  *
@@ -56,6 +57,10 @@ class Commande
      */
     private $duree;
 
+    /**
+     * @ORM\OneToMany(targetEntity="LouvreBundle\Entity\Ticket", mappedBy="commande", cascade={"persist", "remove"})
+     */
+    private $tickets;
 
     /**
      * Get id
@@ -186,5 +191,47 @@ class Commande
     {
         return $this->duree;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add ticket
+     *
+     * @param \LouvreBundle\Entity\Ticket $ticket
+     *
+     * @return Commande
+     */
+    public function addTicket(\LouvreBundle\Entity\Ticket $ticket)
+    {
+        $this->tickets[] = $ticket;
+
+        $ticket->setCommande($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove ticket
+     *
+     * @param \LouvreBundle\Entity\Ticket $ticket
+     */
+    public function removeTicket(\LouvreBundle\Entity\Ticket $ticket)
+    {
+        $this->tickets->removeElement($ticket);
+    }
+
+    /**
+     * Get tickets
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+}
