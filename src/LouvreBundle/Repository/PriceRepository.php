@@ -10,4 +10,17 @@ namespace LouvreBundle\Repository;
  */
 class PriceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function myFindOne($age)
+    {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->where('a.ageMin <= :age')
+            ->andWhere('a.ageMax > :age')
+            ->setParameter('age', $age)
+        ;
+        return $qb
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
 }
