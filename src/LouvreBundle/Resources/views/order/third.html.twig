@@ -1,0 +1,46 @@
+{%  extends "LouvreBundle:home:index.html.twig" %}
+
+{% block body %}
+    Récap commande :
+    {{ commande.name }}
+    <br/>
+    {{ commande.email }}
+    <br/>
+    {{ commande.date|date('d/m/Y') }}
+    <br/>
+    {{ commande.duree }}
+    <br/>
+    {%  set montantCommande = 0  %}
+    {% for ticket in commande.tickets %}
+        {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.price.value }}
+        <br/>
+        {%  set montantCommande = montantCommande + ticket.price.value  %}
+    {% endfor %}
+    {{ montantCommande }}
+    {% set montantCommande = montantCommande * 100 %}
+
+    <form action="{{ path('payDoneOrder',{'name': commande.name}) }}" method="POST">
+        <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_C0r7dLtkZzK1tF6oPxBGYxmK"
+                data-amount="{{ montantCommande }}"
+                data-email="{{ commande.email }}"
+                data-name="Louvre"
+                data-description="{{ "paimenent"|trans }}"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto"
+                data-zip-code="false"
+                data-currency="eur"
+                data-allow-remember-me="false"
+        >
+        </script>
+    </form>
+    {% if test is defined %}
+        {{ test }}
+    {% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+
+{% endblock %}
