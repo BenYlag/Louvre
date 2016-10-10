@@ -124,60 +124,42 @@ class LouvreController extends Controller
      */
     public function orderPayAction(Request $request, Commande $commande)
     {
-        return $this->render('LouvreBundle:order:third.html.twig', array(
-            'commande' => $commande,
-        ));
-    }
+        if ($request->isMethod('POST')) {
+            $orderAmount = $this
+                ->container
+                ->get('louvre.ordertotalprice')
+                ->calculatePrice($commande);
 
-    /**
-     * @Route("/order/payment/done/{name}", name="payDoneOrder")
-     */
-    public function orderPayDoneAction(Request $request, Commande $commande)
-    {
+            // Set your secret key: remember to change this to your live secret key in production
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            \Stripe\Stripe::setApiKey($this->getParameter('stripekey'));
 
+            // Get the credit card details submitted by the form
+            $token = $_POST['stripeToken'];
 
-      // Set your secret key: remember to change this to your live secret key in production
-        // See your keys here: https://dashboard.stripe.com/account/apikeys
-        \Stripe\Stripe::setApiKey("sk_test_eYTkBcEGY9DPpX1c1T9m0NXv");
+            // Create a charge: this will charge the user's card
+            try {
+                $charge = \Stripe\Charge::create(array(
+                    "amount" => $orderAmount, // Amount in cents
+                    "currency" => "eur",
+                    "source" => $token,
+                    "description" => $commande->getName(),
+                ));
+                $test = 'ok';
+            } catch(\Stripe\Error\Card $e) {
+                // The card has been declined
+                $test = 'pb';
+            }
 
-        // Get the credit card details submitted by the form
-        $token = $_POST['stripeToken'];
-
-        // Create a charge: this will charge the user's card
-        try {
-            $charge = \Stripe\Charge::create(array(
-                "amount" => 1000, // Amount in cents         //TODO calculer le prix total de la commande
-                "currency" => "eur",
-                "source" => $token,
-                "description" => $commande->getName(),
+            return $this->render('LouvreBundle:order:third.html.twig', array(
+                'commande' => $commande,
+                'test' => $test,
             ));
-/*
-           // $this->container->get('louvre.ordermail')->sendMail($commande);
-            $message = \Swift_Message::newInstance()
-                ->setSubject('Hello Email')
-                ->setFrom('send@example.com')
-                ->setTo('recipient@example.com')
-                ->setBody(
-                    $this->renderView(
-                    // app/Resources/views/Emails/registration.html.twig
-                        'LouvreBundle:order:second.html.twig',
-                        array('commande' => $commande)
-                    ),
-                    'text/html'
-                )
-            ;
-            $this->get('mailer')->send($message);
-*/ //TODO Fonction MAIL
-            $test = 'ok';
-        } catch(\Stripe\Error\Card $e) {
-            // The card has been declined
-            $test = 'pb';
         }
-
         return $this->render('LouvreBundle:order:third.html.twig', array(
             'commande' => $commande,
-            'test' => $test,
         ));
     }
+
 
 }

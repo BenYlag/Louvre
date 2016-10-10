@@ -17,3 +17,4 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+    stripekey: sk_test_eYTkBcEGY9DPpX1c1T9m0NXv

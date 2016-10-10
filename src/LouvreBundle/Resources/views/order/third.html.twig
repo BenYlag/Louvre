@@ -18,8 +18,7 @@
     {% endfor %}
     {{ montantCommande }}
     {% set montantCommande = montantCommande * 100 %}
-
-    <form action="{{ path('payDoneOrder',{'name': commande.name}) }}" method="POST">
+     <form action="{{ path('payOrder',{'name': commande.name}) }}" method="POST">
         <script
                 src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                 data-key="pk_test_C0r7dLtkZzK1tF6oPxBGYxmK"

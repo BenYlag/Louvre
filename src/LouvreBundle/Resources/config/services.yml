@@ -12,5 +12,10 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
+    louvre.ordertotalprice:
+        class: LouvreBundle\Utils\OrderTotalPrice
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
     louvre.ordermail:
         class: LouvreBundle\Utils\OrderMail
