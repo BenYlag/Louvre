@@ -48,9 +48,6 @@ $(document).ready(function() {
 
     // La fonction qui ajoute un lien de suppression d'une catégorie
     function addDeleteLink($prototype) {
-        // $ticketID = $prototype.find(':hidden').attr("value");
-        //  var $deleteLink = $('<a href="../deleteTicket/'+$ticketID+'" class="btn btn-danger">Supprimer</a>');
-
 
         // Création du lien
         var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
@@ -61,17 +58,8 @@ $(document).ready(function() {
         // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
         $deleteLink.click(function(e) {
 
-            $ticketID = $prototype.find(':hidden').attr("value");
             $prototype.remove();
-            //AJAX CALL
 
-                $.ajax({
-                    type: "POST",
-                    url: "../deleteTicket/"+$ticketID,
-                    success: function () {
-                        console.log('succes');
-                    }
-                });
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
         });

@@ -10,7 +10,7 @@ namespace LouvreBundle\Repository;
  */
 class PriceRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function myFindOne($age)
+    public function findPriceForAge($age)
     {
         $qb = $this->createQueryBuilder('a');
         $qb

@@ -2,6 +2,7 @@
 
 namespace LouvreBundle\Controller;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,7 +45,7 @@ class LouvreController extends Controller
                 $price = $this
                     ->container
                     ->get('louvre.ticketprice')
-                    ->Pricing($ticket->getBirth(), $ticket->getDiscount());
+                    ->pricing($ticket->getBirth(), $ticket->getDiscount());
                 $ticket->setCommande($commande);
                 $ticket->setPrice($price);
             }
@@ -77,18 +78,29 @@ class LouvreController extends Controller
      */
     public function orderEditAction(Request $request, Commande $commande)
     {
+        $em = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->create(CommandeType::class,$commande);
 
+        $originalTickets = new ArrayCollection();
+
+        foreach ($commande->getTickets() as $ticket){
+            $originalTickets->add($ticket);
+        }
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+
+        foreach ($originalTickets as $ticket) {
+            if (false === $commande->getTickets()->contains($ticket)) {
+                $em->remove($ticket);
+            }
+        }
 
             $tickets = $form->get('tickets')->getData();
           foreach ($tickets as $ticket) {
                 $price = $this
                     ->container
                     ->get('louvre.ticketprice')
-                    ->Pricing($ticket->getBirth(), $ticket->getDiscount());
+                    ->pricing($ticket->getBirth(), $ticket->getDiscount());
                 $ticket->setCommande($commande);
                 $ticket->setPrice($price);
             }
@@ -106,28 +118,6 @@ class LouvreController extends Controller
         ));
     }
 
-
-    /**
-     * @Route("/order/deleteTicket/{id}", name="deleteTicket")
-     * @Method({"POST" , "GET"})
-     */
-    public function deleteTicketAction(Ticket $ticket)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $commande = $ticket->getCommande();
-        $commande->removeTicket($ticket);
-        $em->remove($ticket);
-        $em->flush();
-       //prepare the response, e.g.
-        $response = array("code" => 100, "success" => true);
-        //you can return result as JSON
-        return new Response(json_encode($response));
-
-      /*  return $this->redirectToRoute('editOrder', array(
-            'name' => $commande->getName(),
-        ));*/
-    }
 
     /**
      * @Route("/order/payment/{name}", name="payOrder")

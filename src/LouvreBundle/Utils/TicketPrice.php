@@ -13,7 +13,7 @@ class TicketPrice
     {
         $this->em = $em;
     }
-    public function Pricing($birthdate, $discount)
+    public function pricing($birthdate, $discount)
     {
         $repository = $this->em->getRepository('LouvreBundle:Price');
 
@@ -22,7 +22,7 @@ class TicketPrice
             $to = new \DateTime('today');
             $age = $birthdate->diff($to)->y;
 
-            $price = $repository->myFindOne($age);
+            $price = $repository->findPriceForAge($age);
         }
         else {
             $price = $repository->findOneByName("reduit");
