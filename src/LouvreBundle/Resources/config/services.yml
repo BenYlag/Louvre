@@ -11,3 +11,6 @@ services:
         class: LouvreBundle\Utils\TicketPrice
         arguments:
             - "@doctrine.orm.entity_manager"
+
+    louvre.ordermail:
+        class: LouvreBundle\Utils\OrderMail

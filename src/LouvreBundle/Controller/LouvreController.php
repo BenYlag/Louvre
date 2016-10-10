@@ -64,23 +64,27 @@ class LouvreController extends Controller
     }
 
     /**
+     * @Route("/order/resume/{name}", name="resumeOrder")
+     */
+    public function orderResumeAction(Request $request, Commande $commande)
+    {
+        return $this->render('LouvreBundle:order:second.html.twig', array(
+            'commande' => $commande,
+        ));
+    }
+    /**
      * @Route("/order/edit/{name}", name="editOrder")
      */
     public function orderEditAction(Request $request, Commande $commande)
     {
         $form = $this->get('form.factory')->create(CommandeType::class,$commande);
 
+
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $serial = $this
-                ->container
-                ->get('louvre.orderserial')
-                ->createSerial();
-            $commande->setName($serial);
-            $commande->setPayment('null');
 
             $tickets = $form->get('tickets')->getData();
-            foreach ($tickets as $ticket) {
+          foreach ($tickets as $ticket) {
                 $price = $this
                     ->container
                     ->get('louvre.ticketprice')
@@ -102,29 +106,27 @@ class LouvreController extends Controller
         ));
     }
 
-    /**
-     * @Route("/order/resume/{name}", name="resumeOrder")
-     */
-    public function orderResumeAction(Request $request, Commande $commande)
-    {
-        return $this->render('LouvreBundle:order:second.html.twig', array(
-            'commande' => $commande,
-        ));
-    }
 
     /**
      * @Route("/order/deleteTicket/{id}", name="deleteTicket")
-     * @Method("POST")
+     * @Method({"POST" , "GET"})
      */
     public function deleteTicketAction(Ticket $ticket)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $commande = $ticket->getCommande();
+        $commande->removeTicket($ticket);
         $em->remove($ticket);
         $em->flush();
-        //prepare the response, e.g.
+       //prepare the response, e.g.
         $response = array("code" => 100, "success" => true);
         //you can return result as JSON
         return new Response(json_encode($response));
+
+      /*  return $this->redirectToRoute('editOrder', array(
+            'name' => $commande->getName(),
+        ));*/
     }
 
     /**
@@ -142,6 +144,8 @@ class LouvreController extends Controller
      */
     public function orderPayDoneAction(Request $request, Commande $commande)
     {
+
+
       // Set your secret key: remember to change this to your live secret key in production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
         \Stripe\Stripe::setApiKey("sk_test_eYTkBcEGY9DPpX1c1T9m0NXv");
@@ -152,11 +156,28 @@ class LouvreController extends Controller
         // Create a charge: this will charge the user's card
         try {
             $charge = \Stripe\Charge::create(array(
-                "amount" => 1000, // Amount in cents
+                "amount" => 1000, // Amount in cents         //TODO calculer le prix total de la commande
                 "currency" => "eur",
                 "source" => $token,
                 "description" => $commande->getName(),
             ));
+/*
+           // $this->container->get('louvre.ordermail')->sendMail($commande);
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Hello Email')
+                ->setFrom('send@example.com')
+                ->setTo('recipient@example.com')
+                ->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        'LouvreBundle:order:second.html.twig',
+                        array('commande' => $commande)
+                    ),
+                    'text/html'
+                )
+            ;
+            $this->get('mailer')->send($message);
+*/ //TODO Fonction MAIL
             $test = 'ok';
         } catch(\Stripe\Error\Card $e) {
             // The card has been declined

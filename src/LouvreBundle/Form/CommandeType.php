@@ -21,7 +21,7 @@ class CommandeType extends AbstractType
         $builder
             ->add('email', TextType::class)
             ->add('date', DateType::class, array(
-                'data' => new \DateTime('tomorrow'),
+                //'data' => new \DateTime('tomorrow'),
                 'format' => 'dd/MM/yyyy',
                 'years' => range(date('Y'), date('Y') + 2)
             ))
