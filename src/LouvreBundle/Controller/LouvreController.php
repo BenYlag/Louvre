@@ -58,9 +58,14 @@ class LouvreController extends Controller
             ));
 
         }
-
+        $daysOff = $this
+            ->container
+            ->get('louvre.daysoff')
+            ->jours_feries_deux_ans(date('Y'));
+        dump($daysOff);
         return $this->render('LouvreBundle:order:first.html.twig', array(
             'form' => $form->createView(),
+            'daysoff' => $daysOff,
         ));
     }
 

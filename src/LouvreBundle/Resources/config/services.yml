@@ -21,5 +21,8 @@ services:
         class: LouvreBundle\Utils\OrderStripeCharge
         arguments: ['%stripekey%']
 
+    louvre.daysoff:
+        class: LouvreBundle\Utils\DaysOff
+
     louvre.ordermail:
         class: LouvreBundle\Utils\OrderMail

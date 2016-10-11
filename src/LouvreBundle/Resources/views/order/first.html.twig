@@ -1,4 +1,7 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
+{% block stylesheets %}
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+{% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
@@ -10,6 +13,13 @@
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="{{ asset('js/order.js') }}"></script>
+
+<script>
+    var $joursOff = {{ daysoff|json_encode()|raw}};
+
+
+</script>
 
 {% endblock %}

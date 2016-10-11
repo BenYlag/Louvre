@@ -64,4 +64,24 @@ $(document).ready(function() {
             return false;
         });
     }
+    $("form input.date").parent().attr('id','datepicker');
+    $("form input.date").hide();
+
+    $("#datepicker").datepicker({
+        dateFormat: 'dd/mm/yy',
+        minDate: 0,
+        maxDate: "+2Y",
+        firstDay:1,
+        beforeShowDay: function(date) {
+            var day = date.getDay();
+            var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
+            return [(day != 2 && day != 0 && $joursOff.indexOf(string) == -1) ];
+        },
+        onSelect: function(dateText, inst) {
+            var dateAsString = dateText; //the first parameter of this function
+            $("form input.date").val(dateAsString);
+            var dateAsObject = $(this).datepicker( 'getDate' ); //the getDate method
+        },
+    }).attr("readonly","readonly");
+
 });

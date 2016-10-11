@@ -21,9 +21,13 @@ class CommandeType extends AbstractType
         $builder
             ->add('email', TextType::class)
             ->add('date', DateType::class, array(
+                'widget' => 'single_text',
                 //'data' => new \DateTime('tomorrow'),
                 'format' => 'dd/MM/yyyy',
-                'years' => range(date('Y'), date('Y') + 2)
+               // 'years' => range(date('Y'), date('Y') + 2),
+                'attr' => array(
+                    'class' => 'date'
+                ),
             ))
             ->add('duree', CheckboxType::class, array(
                 'required' => false
