@@ -15,6 +15,7 @@ use LouvreBundle\Entity\Ticket;
 
 class LouvreController extends Controller
 {
+
     /**
      * @Route("/")
      */
@@ -43,7 +44,6 @@ class LouvreController extends Controller
             $tickets = $form->get('tickets')->getData();
             foreach ($tickets as $ticket) {
                 $price = $this
-                    ->container
                     ->get('louvre.ticketprice')
                     ->pricing($ticket->getBirth(), $ticket->getDiscount());
                 $ticket->setCommande($commande);
@@ -59,10 +59,10 @@ class LouvreController extends Controller
 
         }
         $daysOff = $this
-            ->container
             ->get('louvre.daysoff')
-            ->jours_feries_deux_ans(date('Y'));
-        dump($daysOff);
+            ->daysOff();
+
+
         return $this->render('LouvreBundle:order:first.html.twig', array(
             'form' => $form->createView(),
             'daysoff' => $daysOff,
@@ -108,9 +108,14 @@ class LouvreController extends Controller
                 'name' => $commande->getName(),
             ));
         }
+        $daysOff = $this
+            ->get('louvre.daysoff')
+            ->daysOff();
 
         return $this->render('LouvreBundle:order:first.html.twig', array(
             'form' => $form->createView(),
+            'commande' => $commande,
+            'daysoff' => $daysOff,
         ));
     }
 

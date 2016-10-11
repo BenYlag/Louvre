@@ -2,8 +2,18 @@
 
 namespace LouvreBundle\Utils;
 
+use Doctrine\ORM\EntityManager;
+
 class DaysOff
 {
+    protected $em;
+    protected $flood_Limit;
+
+    public function __construct(EntityManager $em, $flood_Limit)
+    {
+        $this->em = $em;
+        $this->flood_Limit = $flood_Limit;
+    }
     public function jours_feries($annee)
     {
         /* URL            : http://www.phpsources.org/scripts641-PHP.htm  */
@@ -26,7 +36,7 @@ class DaysOff
             "01/11/$annee",
             "25/12/$annee",
         );
-        dump($jours_feries);
+
         return $jours_feries;
     }
 
@@ -37,5 +47,19 @@ class DaysOff
         }
         sort($jours_feries);
         return $jours_feries;
+    }
+
+    public function daysOff () {
+        $daysOff = $this->jours_feries_deux_ans(date('Y'));
+        $repository = $this->em->getRepository('LouvreBundle:Commande');
+        $fullDays = $repository->getDaysOverLimitTickets($this->flood_Limit);
+
+        foreach ($fullDays as $key => $fullDay) {
+            foreach ($fullDay as $cle => $valeur) {
+                array_push($daysOff, date_format($valeur, 'd/m/Y'));
+            }
+
+        }
+        return $daysOff;
     }
 }

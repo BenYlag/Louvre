@@ -66,22 +66,28 @@ $(document).ready(function() {
     }
     $("form input.date").parent().attr('id','datepicker');
     $("form input.date").hide();
-
+    if (typeof $orderDate != 'undefined') {
+        $orderDate = new Date($orderDate);
+    }
+    else {
+        $orderDate = new Date();
+    }
     $("#datepicker").datepicker({
         dateFormat: 'dd/mm/yy',
         minDate: 0,
         maxDate: "+2Y",
         firstDay:1,
+        defaultDate: $orderDate,
         beforeShowDay: function(date) {
             var day = date.getDay();
             var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
             return [(day != 2 && day != 0 && $joursOff.indexOf(string) == -1) ];
         },
         onSelect: function(dateText, inst) {
-            var dateAsString = dateText; //the first parameter of this function
+            var dateAsString = dateText;
             $("form input.date").val(dateAsString);
-            var dateAsObject = $(this).datepicker( 'getDate' ); //the getDate method
         },
     }).attr("readonly","readonly");
-
+    $( "#datepicker" ).datepicker( "option",
+        $.datepicker.regional[$lang] );
 });

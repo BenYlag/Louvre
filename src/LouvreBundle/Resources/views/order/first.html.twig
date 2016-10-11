@@ -9,15 +9,32 @@
     <a href="#" id="add_ticket">Ajouter un billet</a>
     <input type="submit"/>
     {{ form_end(form) }}
+
+
 {% endblock %}
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js"></script>
+
+{#
+
+    <script src="{{ asset('js/i18n/datepicker-fr.js') }}"></script>
+    <script src="{{ asset('js/i18n/datepicker-de.js') }}"></script>
+    <script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
+#}
+
     <script src="{{ asset('js/order.js') }}"></script>
 
 <script>
     var $joursOff = {{ daysoff|json_encode()|raw}};
+    var $lang = "{{ app.request.getLocale() }}";
+    {% if commande.date is defined %}
+    var $orderDate = "{{ commande.date|date('m-d-y') }}";
+
+    {% endif %}
+
 
 
 </script>

@@ -26,4 +26,19 @@ class CommandeRepository extends EntityRepository
             ->setParameter('id', $id);
         return $qb->getQuery()->getResult();
     }
+
+    public function getDaysOverLimitTickets($limit) {
+        $qb = $this->createQueryBuilder('a');
+        $qb
+            ->select('a.date')
+            ->innerJoin('a.tickets', 'c')
+            ->groupBy('a.date')
+            ->having('COUNT(a) > :count AND a.date > :now')
+            ->setParameter('count', $limit)
+            ->setParameter('now', new \DateTime('now'));
+        return $qb->getQuery()->getResult();
+        }
 }
+
+// TODO VERIFIER QUE L'ON SORT LES BILLETS NON PAYES DU COUNT...
+//SELECT COUNT(*) FROM commande INNER JOIN ticket on commande.id = ticket.commande_id GROUP BY date HAVING COUNT(*) > 1 AND DATE > NOW()

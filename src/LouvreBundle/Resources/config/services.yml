@@ -23,6 +23,9 @@ services:
 
     louvre.daysoff:
         class: LouvreBundle\Utils\DaysOff
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - ['%flood_limit%']
 
     louvre.ordermail:
         class: LouvreBundle\Utils\OrderMail
