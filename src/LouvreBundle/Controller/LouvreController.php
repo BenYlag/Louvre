@@ -65,15 +65,6 @@ class LouvreController extends Controller
     }
 
     /**
-     * @Route("/order/resume/{name}", name="resumeOrder")
-     */
-    public function orderResumeAction(Request $request, Commande $commande)
-    {
-        return $this->render('LouvreBundle:order:second.html.twig', array(
-            'commande' => $commande,
-        ));
-    }
-    /**
      * @Route("/order/edit/{name}", name="editOrder")
      */
     public function orderEditAction(Request $request, Commande $commande)
@@ -89,14 +80,14 @@ class LouvreController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
-        foreach ($originalTickets as $ticket) {
-            if (false === $commande->getTickets()->contains($ticket)) {
-                $em->remove($ticket);
+            foreach ($originalTickets as $ticket) {
+                if (false === $commande->getTickets()->contains($ticket)) {
+                    $em->remove($ticket);
+                }
             }
-        }
 
             $tickets = $form->get('tickets')->getData();
-          foreach ($tickets as $ticket) {
+            foreach ($tickets as $ticket) {
                 $price = $this
                     ->container
                     ->get('louvre.ticketprice')
@@ -120,15 +111,16 @@ class LouvreController extends Controller
 
 
     /**
-     * @Route("/order/payment/{name}", name="payOrder")
+     * @Route("/order/resume/{name}", name="resumeOrder")
      */
-    public function orderPayAction(Request $request, Commande $commande)
+    public function orderResumeAction(Request $request, Commande $commande)
     {
+        $orderAmount = $this
+            ->container
+            ->get('louvre.ordertotalprice')
+            ->calculatePrice($commande);
+
         if ($request->isMethod('POST')) {
-            $orderAmount = $this
-                ->container
-                ->get('louvre.ordertotalprice')
-                ->calculatePrice($commande);
 
             // Set your secret key: remember to change this to your live secret key in production
             // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -151,13 +143,15 @@ class LouvreController extends Controller
                 $test = 'pb';
             }
 
-            return $this->render('LouvreBundle:order:third.html.twig', array(
+            return $this->render('LouvreBundle:order:second.html.twig', array(
                 'commande' => $commande,
+                'orderAmount'=>$orderAmount,
                 'test' => $test,
             ));
         }
-        return $this->render('LouvreBundle:order:third.html.twig', array(
+        return $this->render('LouvreBundle:order:second.html.twig', array(
             'commande' => $commande,
+            'orderAmount'=> $orderAmount,
         ));
     }
 
