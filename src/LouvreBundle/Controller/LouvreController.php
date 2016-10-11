@@ -121,32 +121,15 @@ class LouvreController extends Controller
             ->calculatePrice($commande);
 
         if ($request->isMethod('POST')) {
-
-            // Set your secret key: remember to change this to your live secret key in production
-            // See your keys here: https://dashboard.stripe.com/account/apikeys
-            \Stripe\Stripe::setApiKey($this->getParameter('stripekey'));
-
-            // Get the credit card details submitted by the form
-            $token = $_POST['stripeToken'];
-
-            // Create a charge: this will charge the user's card
-            try {
-                $charge = \Stripe\Charge::create(array(
-                    "amount" => $orderAmount, // Amount in cents
-                    "currency" => "eur",
-                    "source" => $token,
-                    "description" => $commande->getName(),
-                ));
-                $test = 'ok';
-            } catch(\Stripe\Error\Card $e) {
-                // The card has been declined
-                $test = 'pb';
-            }
+            $PaiementResult = $this
+                ->container
+                ->get('louvre.orderstripecharge')
+                ->orderCharge($commande, $orderAmount);
 
             return $this->render('LouvreBundle:order:second.html.twig', array(
                 'commande' => $commande,
                 'orderAmount'=>$orderAmount,
-                'test' => $test,
+                'test' => $PaiementResult,
             ));
         }
         return $this->render('LouvreBundle:order:second.html.twig', array(

@@ -19,6 +19,10 @@ class OrderTotalPrice
         foreach ($commande->getTickets() as $ticket) {
             $totalPrice = $totalPrice + $ticket->getPrice()->getValue();
         }
+        if ($commande->getDuree()) {
+            $totalPrice = $totalPrice / 2;
+        }
+
         return $totalPrice * 100;
     }
 

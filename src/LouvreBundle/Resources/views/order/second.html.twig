@@ -17,7 +17,11 @@ Récap commande :
     <br/>
     Total = {{ orderAmountScreen }}
     <br/>
-    <a href="{{ path('editOrder', {'name': commande.name}) }}">Modifier ma commande</a>
+    {% if test is not defined or test == 'pb'%}
+        <a href="{{ path('editOrder', {'name': commande.name}) }}">Modifier ma commande</a>
+
+
+
     <br/>
     <form action="./{{ commande.name }}" method="post">
         <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
@@ -35,6 +39,7 @@ Récap commande :
 
         />
     </form>
+    {% endif %}
     {% if test is defined %}
         {{ test }}
     {% endif %}

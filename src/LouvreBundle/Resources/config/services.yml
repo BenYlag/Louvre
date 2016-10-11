@@ -17,5 +17,9 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
+    louvre.orderstripecharge:
+        class: LouvreBundle\Utils\OrderStripeCharge
+        arguments: ['%stripekey%']
+
     louvre.ordermail:
         class: LouvreBundle\Utils\OrderMail
