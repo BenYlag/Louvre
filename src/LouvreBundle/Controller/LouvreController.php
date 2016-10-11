@@ -161,5 +161,4 @@ class LouvreController extends Controller
         ));
     }
 
-
 }

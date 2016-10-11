@@ -18,7 +18,9 @@ Récap commande :
     {% endfor %}
     {{ montantCommande }}
     <a href="{{ path('editOrder', {'name': commande.name}) }}">Modifier ma commande</a>
-    <a href="{{ path('payOrder', {'name': commande.name}) }}">Payer ma commande</a>
+
+
+
 {% endblock %}
 
 
