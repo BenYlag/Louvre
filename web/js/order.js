@@ -83,9 +83,10 @@ $(document).ready(function() {
             var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
             return [(day != 2 && day != 0 && $joursOff.indexOf(string) == -1) ];
         },
-        onSelect: function(dateText, inst) {
-            var dateAsString = dateText;
-            $("form input.date").val(dateAsString);
+            onSelect: function(dateText, inst) {
+            var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
+            var dateText1 = $.datepicker.formatDate("dd/mm/yy", date);
+            $("form input.date").val(dateText1);
         },
     }).attr("readonly","readonly");
     $( "#datepicker" ).datepicker( "option",
