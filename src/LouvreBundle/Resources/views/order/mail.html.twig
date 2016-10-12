@@ -1,0 +1,12 @@
+    Récap commande :
+    {{ commande.name }}
+    <br/>
+    {{ commande.email }}
+    <br/>
+    {{ commande.date|date('d/m/Y') }}
+    <br/>
+    {{ commande.duree }}
+    <br/>
+    {% for ticket in commande.tickets %}
+        {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.price.value }}
+    {% endfor %}

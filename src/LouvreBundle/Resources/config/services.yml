@@ -29,3 +29,6 @@ services:
 
     louvre.ordermail:
         class: LouvreBundle\Utils\OrderMail
+        arguments:
+           - "@mailer"
+           - "@templating"

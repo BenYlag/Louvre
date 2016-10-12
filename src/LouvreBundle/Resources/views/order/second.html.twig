@@ -17,7 +17,7 @@ Récap commande :
     <br/>
     Total = {{ orderAmountScreen }}
     <br/>
-    {% if test is not defined or test == 'pb'%}
+    {% if commande.status != 'pay_success'%}
         <a href="{{ path('editOrder', {'name': commande.name}) }}">Modifier ma commande</a>
 
 
@@ -39,9 +39,9 @@ Récap commande :
 
         />
     </form>
-    {% endif %}
-    {% if test is defined %}
-        {{ test }}
+
+    {% elseif test is defined %}
+        {{ commande.status }}
     {% endif %}
 
 {% endblock %}

@@ -49,8 +49,11 @@ class DaysOff
         return $jours_feries;
     }
 
-    public function daysOff () {
-        $daysOff = $this->jours_feries_deux_ans(date('Y'));
+    public function daysOff ($date=null) {
+        if (is_null($date)) {
+            $date = date('Y');
+        }
+        $daysOff = $this->jours_feries_deux_ans($date);
         $repository = $this->em->getRepository('LouvreBundle:Commande');
         $fullDays = $repository->getDaysOverLimitTickets($this->flood_Limit);
 

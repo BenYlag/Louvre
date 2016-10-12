@@ -9,11 +9,16 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 /**
  * Commande
  *
- * @ORM\Table(name="commande")
+ * @ORM\Table(name="commande", indexes={@ORM\Index(name="date_idx", columns={"date"})})
  * @ORM\Entity(repositoryClass="LouvreBundle\Repository\CommandeRepository")
  */
 class Commande
 {
+    const COMMANDE_STARTED = "starded";
+    const COMMANDE_MODIFIED = "modified";
+    const COMMANDE_PAYED = "pay_success";
+    const COMMANDE_PAY_PB = "pay_failed";
+
     /**
      * @var int
      *
@@ -56,9 +61,9 @@ class Commande
     /**
      * @var string
      *
-     * @ORM\Column(name="payment", type="string", length=255)
+     * @ORM\Column(name="status", type="string", length=255)
      */
-    private $payment;
+    private $status;
 
     /**
      * @var bool
@@ -155,29 +160,6 @@ class Commande
         return $this->date;
     }
 
-    /**
-     * Set payment
-     *
-     * @param string $payment
-     *
-     * @return Commande
-     */
-    public function setPayment($payment)
-    {
-        $this->payment = $payment;
-
-        return $this;
-    }
-
-    /**
-     * Get payment
-     *
-     * @return string
-     */
-    public function getPayment()
-    {
-        return $this->payment;
-    }
 
     /**
      * Set duree
@@ -202,12 +184,14 @@ class Commande
     {
         return $this->duree;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->tickets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->status = self::COMMANDE_STARTED;
     }
 
     /**
@@ -268,5 +252,29 @@ class Commande
                 ->atPath('duree')
                 ->addViolation();
         }
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Commande
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

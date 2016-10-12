@@ -29,13 +29,13 @@ class OrderStripeCharge
                 "source" => $token,
                 "description" => $commande->getName(),
             ));
-            $test = 'ok';
+            $status = "ok";
         } catch(\Stripe\Error\Card $e) {
             // The card has been declined
-            $test = 'pb';
+            $status = "pb";
         }
 
-        return $test;
+        return $status;
     }
 
 }

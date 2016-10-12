@@ -64,8 +64,8 @@ $(document).ready(function() {
             return false;
         });
     }
-    $("form input.date").parent().attr('id','datepicker');
-    $("form input.date").hide();
+    $("#commande_date").parent().attr('id','datepicker');
+    $("#commande_date").hide();
     if (typeof $orderDate != 'undefined') {
         $orderDate = new Date($orderDate);
     }
@@ -86,7 +86,7 @@ $(document).ready(function() {
             onSelect: function(dateText, inst) {
             var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
             var dateText1 = $.datepicker.formatDate("dd/mm/yy", date);
-            $("form input.date").val(dateText1);
+            $("#commande_date").val(dateText1);
         },
     }).attr("readonly","readonly");
     $( "#datepicker" ).datepicker( "option",

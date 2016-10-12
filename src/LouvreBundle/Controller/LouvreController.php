@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use LouvreBundle\Entity\Commande;
 use LouvreBundle\Form\CommandeType;
@@ -26,6 +26,8 @@ class LouvreController extends Controller
 
     /**
      * @Route("/order", name="createOrder")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function orderAction(Request $request)
     {
@@ -34,12 +36,8 @@ class LouvreController extends Controller
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $serial = $this
-                ->container
-                ->get('louvre.orderserial')
-                ->createSerial();
+            $serial = $this->get('louvre.orderserial')->createSerial();
             $commande->setName($serial);
-            $commande->setPayment('null');
 
             $tickets = $form->get('tickets')->getData();
             foreach ($tickets as $ticket) {
@@ -71,6 +69,9 @@ class LouvreController extends Controller
 
     /**
      * @Route("/order/edit/{name}", name="editOrder")
+     * @param Request $request
+     * @param Commande $commande
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
     public function orderEditAction(Request $request, Commande $commande)
     {
@@ -93,14 +94,12 @@ class LouvreController extends Controller
 
             $tickets = $form->get('tickets')->getData();
             foreach ($tickets as $ticket) {
-                $price = $this
-                    ->container
-                    ->get('louvre.ticketprice')
+                $price = $this->get('louvre.ticketprice')
                     ->pricing($ticket->getBirth(), $ticket->getDiscount());
                 $ticket->setCommande($commande);
                 $ticket->setPrice($price);
             }
-
+            $commande->setStatus($commande::COMMANDE_MODIFIED);
             $em->persist($commande);
             $em->flush();
 
@@ -122,6 +121,9 @@ class LouvreController extends Controller
 
     /**
      * @Route("/order/resume/{name}", name="resumeOrder")
+     * @param Request $request
+     * @param Commande $commande
+     * @return Response
      */
     public function orderResumeAction(Request $request, Commande $commande)
     {
@@ -131,15 +133,33 @@ class LouvreController extends Controller
             ->calculatePrice($commande);
 
         if ($request->isMethod('POST')) {
-            $PaiementResult = $this
+            $paiementResult = $this
                 ->container
                 ->get('louvre.orderstripecharge')
                 ->orderCharge($commande, $orderAmount);
 
+            $em = $this->getDoctrine()->getManager();
+
+            if ($paiementResult == "ok") {
+                $commande->setStatus($commande::COMMANDE_PAYED);
+            }
+            else {
+                $commande->setStatus($commande::COMMANDE_PAY_PB);
+            }
+
+            $em->persist($commande);
+            $em->flush();
+
+           /* $contenuMail =  $this->render('LouvreBundle:order:mail.html.twig',
+                array('commande' => $commande)
+            );*/
+             $this->get('louvre.ordermail')->sendMail($commande);
+
+
             return $this->render('LouvreBundle:order:second.html.twig', array(
                 'commande' => $commande,
                 'orderAmount'=>$orderAmount,
-                'test' => $PaiementResult,
+                'test' => $paiementResult,
             ));
         }
         return $this->render('LouvreBundle:order:second.html.twig', array(
