@@ -12,6 +12,7 @@ Récap commande :
     <br/>
     {% for ticket in commande.tickets %}
     {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.price.value }}
+        <br/>
     {% endfor %}
     {% set orderAmountScreen = orderAmount / 100 %}
     <br/>
@@ -40,9 +41,13 @@ Récap commande :
         />
     </form>
 
-    {% elseif test is defined %}
-        {{ commande.status }}
+    {% else %}
+        {{ 'order.payed'|trans }}
+        <br/>
+        {% set retest = path('editOrder', {'name': commande.name}) %}
+        <img src="{{ qrcode_url(retest, {label: commande.name}) }}" />
     {% endif %}
+
 
 {% endblock %}
 
