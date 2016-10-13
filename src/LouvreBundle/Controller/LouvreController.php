@@ -3,21 +3,20 @@
 namespace LouvreBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use LouvreBundle\Entity\Commande;
 use LouvreBundle\Form\CommandeType;
-use LouvreBundle\Entity\Ticket;
+
 
 
 class LouvreController extends Controller
 {
 
     /**
-     * @Route("/")
+     * @Route("/", name="home")
      */
     public function indexAction()
     {
@@ -142,6 +141,7 @@ class LouvreController extends Controller
 
             if ($paiementResult == "ok") {
                 $commande->setStatus($commande::COMMANDE_PAYED);
+                $this->get('louvre.ordermail')->sendMail($commande);
             }
             else {
                 $commande->setStatus($commande::COMMANDE_PAY_PB);
@@ -150,17 +150,6 @@ class LouvreController extends Controller
             $em->persist($commande);
             $em->flush();
 
-           /* $contenuMail =  $this->render('LouvreBundle:order:mail.html.twig',
-                array('commande' => $commande)
-            );*/
-             $this->get('louvre.ordermail')->sendMail($commande);
-
-
-            return $this->render('LouvreBundle:order:second.html.twig', array(
-                'commande' => $commande,
-                'orderAmount'=>$orderAmount,
-                'test' => $paiementResult,
-            ));
         }
         return $this->render('LouvreBundle:order:second.html.twig', array(
             'commande' => $commande,
