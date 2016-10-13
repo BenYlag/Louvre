@@ -8,5 +8,7 @@
     {{ commande.duree }}
     <br/>
     {% for ticket in commande.tickets %}
-        {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.price.value }}
+        {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.country }} {{ ticket.price.value }}
     {% endfor %}
+            {% set order_resume = path('editOrder', {'name': commande.name}) %}
+    <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ order_resume }}" />

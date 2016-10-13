@@ -45,6 +45,14 @@ class Ticket
     private $surname;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\Country()
+     */
+    private $country;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="birth", type="date")
@@ -70,6 +78,7 @@ class Ticket
      * @ORM\JoinColumn(nullable=false)
      */
     private $price;
+
 
     /**
      * Get id
@@ -223,5 +232,31 @@ class Ticket
     public function getPrice()
     {
         return $this->price;
+    }
+
+
+
+    /**
+     * Set country
+     *
+     * @param string $country
+     *
+     * @return Ticket
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 }
