@@ -1,0 +1,42 @@
+Sitemap: "Plan du site"
+Legals: "Mentions légales"
+'Order tickets': 'Commander des billets'
+'Consult my order': 'Consulter ma commande'
+'Contact us': 'Nous contacter'
+'Your Order number': 'Votre numéro de commande'
+'Your Email': 'Votre email'
+Search: "Rechercher"
+"Nous ne trouvons pas de commande avec cette combinaison.\n        Vérifiez les informations saisies ou contactez-nous...": "__Nous ne trouvons pas de commande avec cette combinaison.\n        Vérifiez les informations saisies ou contactez-nous..."
+order.date: "Date"
+order.email: "Email"
+order.duree: "Demi-journée"
+order.tickets: "Billets"
+'Add a ticket': 'Ajouter un billet'
+Next: 'Suite'
+Discount: 'Réduction'
+"Afin de bénéficier d'un tarif réduit, chaque visiteur doit pouvoir présenter un justificatif de sa situation.<br/>\n                    Le tarif réduit est attribué aux personnes suivantes : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…": "__Afin de bénéficier d'un tarif réduit, chaque visiteur doit pouvoir présenter un justificatif de sa situation.<br/>\n                    Le tarif réduit est attribué aux personnes suivantes : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…"
+'Don''t show again': 'Ne plus afficher'
+Close: 'Fermer'
+Half-day: 'Demi-journée'
+'En choisissant la formule demi-journée, l''entrée au musée ne se fera qu''a partir de 14h.': 'En choisissant la formule demi-journée, l''entrée au musée ne se fera qu''a partir de 14h.'
+'Delete this ticket': 'Supprimer ce billet'
+'The date is required': 'La date est obligatoire'
+'Your order summary :': 'Récapitulatif de votre commande'
+'Full day': 'Journée complete'
+'Tickets in your order': 'Les billets de votre commande'
+Name: "Nom"
+Surname: "Prénom"
+Country: "Nationalité"
+Pricing: "Tarification"
+Price: "Prix"
+Total: "Total"
+'Edit my order': 'Modifier ma commande'
+paiement: "Payer ma commande"
+order.payed: "Commande payée et validée"
+Home: "Accueil"
+ticket.name: "Nom"
+ticket.surname: "Prénom"
+ticket.birth: "Date de naissance"
+ticket.country: "Nationalité"
+ticket.discount: "Réduction"
+Order: "Commande"
