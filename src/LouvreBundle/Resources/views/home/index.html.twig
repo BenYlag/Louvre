@@ -1,21 +1,72 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8" />
-    <title></title>
-    <meta name="description" content="La billetterie du musée du Louvre" />
-    {% block stylesheets %}
 
+<head>
+    <!-- Place this data between the <head> tags of your website -->
+    <title>Louvre</title>
+    <meta name="description" content="Louvre" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     {% endblock %}
 </head>
 
 <body>
-{% block body %}
+<div class="container">
+    <div class="row header">
+        <div class="col-xs-6 col-lg-offset-1 col-lg-3 header">
+            <a href="{{ path('home') }}"><h1>Louvre</h1></a>
+        </div>
+        <div class="col-xs-6 col-lg-7 header">
+            {% block icones %}
+                <h2>{{ pageTitle|trans }}</h2>
+            {% endblock %}
 
-{% endblock %}
+        </div>
+    </div>
+    <div class="row corps">
 
+            <div class="col-xs-12 col-lg-10 corps interieur">
+                {%  block body %}
+                    <div  class="col-xs-offset-2 col-sm-offset-3 col-md-offset-4 col-lg-offset-4 col-xs-8 col-sm-6 col-md-4 col-lg-4 corps interieur">
+                    <p><a class="btn btn-warning btn-block" href="{{ path('createOrder') }}">{{ "Order tickets"|trans }}</a></p>
+                    <p><a class="btn btn-warning btn-block" href="{{ path('consult') }}">{{ "Consult my order"|trans }}</a></p>
+                    <p><a class="btn btn-warning btn-block" href="">{{ "Contact us"|trans }}</a></p>
+                    </div>
+                        <div class="col-xs-offset-2 col-xs-8 drapeaux">
+                        <p><a class="flag flag-fr" href="{{ path('home', {'_locale': 'fr'}) }}"/></a></p>
+                        <p><a class="flag flag-gb" href="{{ path('home', {'_locale': 'en'}) }}"/></a></p>
+                        <p><a class="flag flag-de" href=""/></a></p>
+                        <p><a class="flag flag-es" href=""/></a></p>
+
+                    </div>
+                {% endblock %}
+            </div>
+
+    </div>
+    <div class="row footer">
+        <div class="col-xs-12 col-lg-offset-1 col-lg-10 footer">
+            <div class="row">
+                <div class="col-xs-4">
+                    <p>{{ "Sitemap"|trans }}</p>
+                </div>
+                <div class="col-xs-4">
+                    <p>© Musée du Louvre 2016</p>
+                </div>
+                <div class="col-xs-4">
+                    <p>{{ "Legals"|trans }}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% block javascripts %}
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% endblock %}
 </body>
+
 </html>

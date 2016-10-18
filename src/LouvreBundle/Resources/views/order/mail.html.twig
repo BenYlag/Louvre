@@ -1,15 +1,57 @@
-    Récap commande :
-    {{ commande.name }}
-    <br/>
-    {{ commande.email }}
-    <br/>
-    {{ commande.date|date('d/m/Y') }}
-    <br/>
-    {{ commande.duree }}
-    <br/>
+<img src="{{ image }}" />
+<br/>
+{{ "Your order summary :"|trans }}
+{{ commande.name }}
+<br/>
+{{ commande.email }}
+<br/>
+{{ commande.date|date('d/m/Y') }}
+<br/>
+{% if commande.duree !='1' %}
+    {{ "Full day"|trans }}
+{% else %}
+    {{ "Half-day"|trans }}
+{% endif %}
+
+<br/><br/>
+<table>
+    <caption>{{ "Tickets in your order"|trans }}</caption>
+    <thead>
+    <tr>
+        <th>{{ "Name"|trans }}</th>
+        <th>{{ "Surname"|trans }}</th>
+        <th>{{ "Country"|trans }}</th>
+        <th>{{ "Pricing"|trans }}</th>
+        <th>{{ "Price"|trans }}</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th colspan="4">{{ "Total"|trans }}</th>
+        <th>
+            {% set orderAmountScreen = orderAmount / 100 %}
+            {{ orderAmountScreen }}
+        </th>
+    </tr>
+    </tfoot>
+    <tbody>
+
     {% for ticket in commande.tickets %}
-        {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.country }} {{ ticket.price.value }}
+        {#{{ ticket.id }}#}
+        <tr>
+            <td>{{ ticket.name }}</td>
+            <td>{{ ticket.surname }}</td>
+            <td>{{ ticket.country }}</td>
+            <td>
+                {{ ticket.price.name|trans }}
+            </td>
+
+            <td>{{ ticket.price.value }}</td>
+        </tr>
     {% endfor %}
-            {% set order_resume = path('editOrder', {'name': commande.name}) %}
+
+    </tbody>
+</table>
+
+{% set order_resume = path('resumeOrder', {'name': commande.name}) %}
     <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ order_resume }}" />
-    <img src="{{ image }}" />

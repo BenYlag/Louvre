@@ -1,0 +1,41 @@
+{%  extends "LouvreBundle:home:index.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+<div class="row" >
+    <div class="col-xs-12" id="searchOrder">
+<form method="post">
+    <label for="textinput">{{ "Your Order number"|trans }}</label>
+    <br/>
+    <input id="textinput" name="name" type="text">
+    <br/>
+    <label for="email">{{ "Your Email"|trans }}</label>
+    <br/>
+    <input id="email" name="email" type="email">
+    <br/>
+    <input type="submit" value="{{ "Search"|trans }}" class="btn btn-success">
+</form></div></div>
+
+{% if error is defined %}
+    <div class="row">
+    <div class="col-xs-offset-3 col-xs-6 alert alert-danger">
+        {% trans %}
+Nous ne trouvons pas de commande avec cette combinaison.
+        Vérifiez les informations saisies ou contactez-nous...{% endtrans %}
+    </div>
+    </div>
+        {% endif %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $('.interieur').removeClass('interieur');
+    $('.corps').css('display','block');
+    $('.row .corps').addClass('col-lg-offset-1');
+    </script>
+{% endblock %}

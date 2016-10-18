@@ -1,33 +1,76 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
 
 {% block body %}
-Récap commande :
-    {{ commande.name }}
-    <br/>
-    {{ commande.email }}
-    <br/>
-    {{ commande.date|date('d/m/Y') }}
-    <br/>
-    {{ commande.duree }}
-    <br/>
-    {% for ticket in commande.tickets %}
-    {{ ticket.id }} {{ ticket.name }} {{ ticket.surname }} {{ ticket.country }} {{ ticket.price.value }}
-        <br/>
-    {% endfor %}
-    {% set orderAmountScreen = orderAmount / 100 %}
-    <br/>
-    Total = {{ orderAmountScreen }}
-    <br/>
+    <div class="row">
+        <div class="col-xs-12" id="recap">
+
+            {{ "Your order summary :"|trans }}
+            {{ commande.name }}
+            <br/>
+            {{ commande.email }}
+            <br/>
+            {{ commande.date|date('d/m/Y') }}
+            <br/>
+            {% if commande.duree !='1' %}
+                {{ "Full day"|trans }}
+                        {% else %}
+                            {{ "Half-day"|trans }}
+                        {% endif %}
+
+            <br/>
+            <table>
+                <caption>{{ "Tickets in your order"|trans }}</caption>
+                <thead>
+                <tr>
+                    <th>{{ "Name"|trans }}</th>
+                    <th>{{ "Surname"|trans }}</th>
+                    <th>{{ "Country"|trans }}</th>
+                    <th>{{ "Pricing"|trans }}</th>
+                    <th>{{ "Price"|trans }}</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th colspan="4">{{ "Total"|trans }}</th>
+                    <th>
+                        {% set orderAmountScreen = orderAmount / 100 %}
+                        {{ orderAmountScreen }}
+                    </th>
+                </tr>
+                </tfoot>
+                <tbody>
+
+                {% for ticket in commande.tickets %}
+                    {#{{ ticket.id }}#}
+                    <tr>
+                        <td>{{ ticket.name }}</td>
+                        <td>{{ ticket.surname }}</td>
+                        <td>{{ ticket.country }}</td>
+                        <td>
+                            {{ ticket.price.name|trans }}
+                        </td>
+
+                        <td>{{ ticket.price.value }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+<div class="row" id="options">
+    <div class="col-xs-offset-3 col-xs-6">
+
     {% if commande.status != 'pay_success'%}
-        <a href="{{ path('editOrder', {'name': commande.name}) }}">Modifier ma commande</a>
-
-
+        <a href="{{ path('editOrder', {'name': commande.name}) }}" class="btn btn-warning btn-block">{{ "Edit my order"|trans }}</a>
 
     <br/>
     <form action="./{{ commande.name }}" method="post">
-        <noscript>You must <a href="http://www.enable-javascript.com" target="_blank">enable JavaScript</a> in your web browser in order to pay via Stripe.</noscript>
-
         <input
+                id="payerStripe"
+                class="btn btn-success"
                 type="submit"
                 value="{{ "paiement"|trans }}"
                 data-key="pk_test_C0r7dLtkZzK1tF6oPxBGYxmK"
@@ -43,14 +86,14 @@ Récap commande :
 
     {% else %}
         {{ 'order.payed'|trans }}
-        <br/>
-        {% set order_resume = path('editOrder', {'name': commande.name}) %}
+
+        {% set order_resume = path('resumeOrder', {'name': commande.name}) %}
         <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ order_resume }}" />
         <br/>
-        <a href="{{ path('home') }}">Accueil</a>
+        <a href="{{ path('home') }}" class="btn btn-success btn-block" >{{ "Home"|trans }}</a>
     {% endif %}
-
-
+</div>
+    </div>
 {% endblock %}
 
 
@@ -70,6 +113,9 @@ Récap commande :
                 });
                 StripeCheckout.open(opts);
             });
+            $('.interieur').removeClass('interieur');
         });
+        $('.corps').css('display','block');
+        $('.row .corps').addClass('col-lg-offset-1');
     </script>
 {% endblock %}

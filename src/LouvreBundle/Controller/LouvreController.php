@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response as Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use LouvreBundle\Entity\Commande;
 use LouvreBundle\Form\CommandeType;
+use LouvreBundle\Form\CommandeSearchType;
 
 
 
@@ -20,7 +21,51 @@ class LouvreController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('LouvreBundle:home:index.html.twig');
+        return $this->render('LouvreBundle:home:index.html.twig', array(
+            'pageTitle' => "",
+        ));
+    }
+
+    /**
+     * @Route("/consult", name="consult")
+     */
+    public function consultAction(Request $request) {
+
+        if ($request->isMethod('POST')) {
+            try{
+                $orderName = $request->request->get('name');
+                $orderMail = $request->request->get('email');
+                $commande =  $this->getDoctrine()
+                    ->getRepository('LouvreBundle:Commande')
+                    ->findOneBy(array ('name' => $orderName,
+                        'email' => $orderMail));
+
+                $orderAmount = $this
+                    ->container
+                    ->get('louvre.ordertotalprice')
+                    ->calculatePrice($commande);
+
+                return $this->redirectToRoute('resumeOrder', array(
+                    'name' => $commande->getName(),
+                    'orderAmount'=> $orderAmount,
+                    'pageTitle' => "Synthese",
+                ));
+            }
+            catch(\Exception $e){
+                error_log($e->getMessage());
+                return $this->render('LouvreBundle:order:consult.html.twig', array(
+                    'pageTitle' => "Find my order",
+                    'error' => 'erreur',
+                ));
+
+            }
+
+
+        }
+        return $this->render('LouvreBundle:order:consult.html.twig', array(
+            'pageTitle' => "Find my order",
+        ));
+
     }
 
     /**
@@ -52,6 +97,7 @@ class LouvreController extends Controller
 
             return $this->redirectToRoute('resumeOrder', array(
                 'name' => $commande->getName(),
+                'pageTitle' => "Synthese",
             ));
 
         }
@@ -63,6 +109,7 @@ class LouvreController extends Controller
         return $this->render('LouvreBundle:order:first.html.twig', array(
             'form' => $form->createView(),
             'daysoff' => $daysOff,
+            'pageTitle' => "Order",
         ));
     }
 
@@ -104,6 +151,7 @@ class LouvreController extends Controller
 
             return $this->redirectToRoute('resumeOrder', array(
                 'name' => $commande->getName(),
+                'pageTitle' => "Synthese",
             ));
         }
         $daysOff = $this
@@ -114,6 +162,7 @@ class LouvreController extends Controller
             'form' => $form->createView(),
             'commande' => $commande,
             'daysoff' => $daysOff,
+            'pageTitle' => "Edit Order",
         ));
     }
 
@@ -141,7 +190,7 @@ class LouvreController extends Controller
 
             if ($paiementResult == "ok") {
                 $commande->setStatus($commande::COMMANDE_PAYED);
-                $this->get('louvre.ordermail')->sendMail($commande);
+                $this->get('louvre.ordermail')->sendMail($commande, $orderAmount);
             }
             else {
                 $commande->setStatus($commande::COMMANDE_PAY_PB);
@@ -154,6 +203,7 @@ class LouvreController extends Controller
         return $this->render('LouvreBundle:order:second.html.twig', array(
             'commande' => $commande,
             'orderAmount'=> $orderAmount,
+            'pageTitle' => "Synthese",
         ));
     }
 

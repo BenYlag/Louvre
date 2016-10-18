@@ -1,0 +1,164 @@
+html, body, .container {
+    height:100vh;
+}
+
+body, caption {
+    color: orange;
+}
+
+#options img {
+    display: block;
+    height: 200px;
+    width: 200px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#options {
+    text-align: center;
+    display: flex;
+   flex-direction: column;
+    justify-content: center;
+    margin-top:20px;
+
+
+}
+
+#recap {
+    margin-top:20px;
+}
+#searchOrder {
+
+    margin-top: 50px;
+    margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+#searchOrder input {
+    margin-bottom: 10px;
+}
+.modal {
+    color: black;
+}
+
+.header{
+    height: 60px;
+}
+
+.footer {
+    height:20px;
+}
+.corps {
+    height:calc(100vh - 80px);
+    overflow: scroll;
+    background-color: rgba(0,0,0,0.5);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+body {
+
+    background: url("../img/bckgd.jpg") no-repeat;
+    background-size: 100vh;
+    background-attachment: fixed;
+    background-position: center;
+    background-color: black;
+}
+
+.corps input, select {
+    color: black;
+}
+#payerStripe{
+    color: white;
+    width: 100%;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
+h1{
+    font-family: "Times New Roman";
+    color:white;
+    margin-top: 0px;
+    font-size: 50px;
+}
+
+#datepicker {
+    display: flex;
+    justify-content: center;
+}
+
+/*
+[class*="col-"] {
+    border: 2px solid yellow;
+}*/
+
+.btn{
+    white-space:normal !important;
+    word-wrap:break-word;
+}
+
+.effacer {
+    display: none;
+}
+
+
+.interieur {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around
+}
+.footer {
+    text-align: center;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+}
+
+table
+{
+   width: 100%;
+}
+
+
+thead th, td {
+    border-bottom: 1px solid #CC7832;
+}
+
+
+/*!
+ * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
+ */
+
+.flag {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: url('../img/flags.png') no-repeat;
+}
+
+
+.flag.flag-fr {
+    background-position: 0 -32px;
+}
+
+.flag.flag-de {
+    background-position: 0 0;
+}
+
+.flag.flag-gb {
+    background-position: -32px -32px;
+}
+
+.flag.flag-es {
+    background-position: -32px 0;
+}
+.drapeaux {
+    display: flex;
+    justify-content: space-around;
+}
+

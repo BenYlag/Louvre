@@ -247,7 +247,7 @@ class Commande
         $aujourdhui = new \DateTime('today');
         $aujourdhui = $aujourdhui->format('d/m/Y');
 
-        if (($jourResa == $aujourdhui) && (!$this->getDuree()) && ($maintenant > 12)) {
+        if (($jourResa == $aujourdhui) && (!$this->getDuree()) && ($maintenant > 13)) {
             $context->buildViolation('order.error.hour')
                 ->atPath('duree')
                 ->addViolation();

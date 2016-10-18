@@ -19,7 +19,7 @@ class OrderMail
         $this->templating = $templating;
     }
 
-    protected function sendMessage($to, $subject, $body)
+    protected function sendMessage($to, $subject, $body, $orderAmount)
     {
         $mail = \Swift_Message::newInstance();
         $cid = $mail->embed(\Swift_Image::fromPath('./img/logo.png'));
@@ -27,18 +27,18 @@ class OrderMail
             ->setFrom($this->from,$this->name)
             ->setTo($to)
             ->setSubject($subject)
-            ->setBody( $this->templating->render('LouvreBundle:order:mail.html.twig', array('commande' => $body, 'image' => $cid)))
+            ->setBody( $this->templating->render('LouvreBundle:order:mail.html.twig', array('commande' => $body, 'image' => $cid, 'orderAmount'=>$orderAmount)))
             ->setReplyTo($this->reply,$this->name)
             ->setContentType('text/html');
 
         $this->mailer->send($mail);
     }
 
-    public function sendMail(Commande $commande){
+    public function sendMail(Commande $commande, $orderAmount){
         $subject = "Order " . $commande->getName() . " confirmation";
       //  $template = 'LouvreBundle:order:mail.html.twig';
         $to = $commande->getEmail();
        // $body = $this->templating->render('LouvreBundle:order:mail.html.twig', array('commande' => $commande));
-        $this->sendMessage($to, $subject, $commande);
+        $this->sendMessage($to, $subject, $commande, $orderAmount);
     }
 }

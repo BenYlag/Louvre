@@ -56,12 +56,17 @@ class DaysOff
         $daysOff = $this->jours_feries_deux_ans($date);
         $repository = $this->em->getRepository('LouvreBundle:Commande');
         $fullDays = $repository->getDaysOverLimitTickets($this->flood_Limit);
-
         foreach ($fullDays as $key => $fullDay) {
             foreach ($fullDay as $cle => $valeur) {
                 array_push($daysOff, date_format($valeur, 'd/m/Y'));
             }
+        }
+        $maintenant = date("H");
+        $maintenant = (int)$maintenant;
+        $aujourdhui = new \DateTime('today');
 
+        if ($maintenant > 13) {
+            array_push($daysOff, date_format($aujourdhui, 'd/m/Y'));
         }
         return $daysOff;
     }

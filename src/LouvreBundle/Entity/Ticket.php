@@ -28,7 +28,7 @@ class Ticket
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\Length(
      *     min = 2,
-     *     minMessage="order.error.minName"
+     *     minMessage="ticket.error.minName"
      * )
      */
     private $name;
@@ -39,7 +39,7 @@ class Ticket
      * @ORM\Column(name="surname", type="string", length=255)
      * @Assert\Length(
      *     min = 2,
-     *     minMessage="order.error.minSurname"
+     *     minMessage="ticket.error.minSurname"
      * )
      */
     private $surname;

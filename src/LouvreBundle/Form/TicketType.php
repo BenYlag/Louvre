@@ -21,20 +21,24 @@ class TicketType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('id', HiddenType::class, array(
-                'disabled' => true
+            ->add('name', TextType::class, array(
+                'label' => 'ticket.name',
             ))
-            ->add('name', TextType::class)
-            ->add('surname', TextType::class)
+            ->add('surname', TextType::class, array(
+                'label' => 'ticket.surname',
+            ))
             ->add('birth', DateType::class, array(
-                'years' => range(date('Y') - 110, date('Y'))
+                'years' => range(date('Y') - 110, date('Y')),
+                'label' => 'ticket.birth',
             ))
             ->add('country', CountryType::class, array(
-                //'choices' => Intl::getRegionBundle()->getCountryNames(),
-                'preferred_choices' => array('FR', 'GB', 'DE', 'ES')
+                'preferred_choices' => array('FR', 'GB', 'DE', 'ES'),
+                'label' => 'ticket.country',
             ))
             ->add('discount', CheckboxType::class, array(
-                'required' => false
+                'required' => false,
+                'label' => 'ticket.discount',
+                'label_attr' => array ('class' => 'discount'),
             ))
         ;
     }
@@ -45,7 +49,7 @@ class TicketType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'LouvreBundle\Entity\Ticket'
+            'data_class' => 'LouvreBundle\Entity\Ticket',
         ));
     }
 }

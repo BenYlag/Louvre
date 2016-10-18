@@ -1,39 +1,101 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
 {% block stylesheets %}
-
+    {{ parent() }}
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
+
+
     {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <a href="#" id="add_ticket">Ajouter un billet</a>
-    <input type="submit"/>
+    {{ form_row(form.date, {'label':  "order.date"|trans }) }}
+    {{ form_row(form.email, {'label':  "order.email"|trans }) }}
+    {{ form_row(form.duree, {'label':  "order.duree"|trans }) }}
+    {#
+       {% for ticket in form.tickets %}
+           {{ form_row(ticket.name, {'label':'order.ticket.name'}) }}
+           {{ form_row(ticket.surname, {'label':'order.ticket.surname'}) }}
+           {{ form_row(ticket.birth, {'label':'order.ticket.birth'}) }}
+           {{ form_row(ticket.country, {'label':'order.ticket.country'}) }}
+           {{ form_row(ticket.discount, {'label':'order.ticket.discount'}) }}
+       {% endfor %}
+    #}
+     {{ form_row(form.tickets, {'label':  "order.tickets"|trans }) }}
+
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6">
+    <button id="add_ticket" class="btn btn-warning btn-block">{{ "Add a ticket"|trans }}</button><br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6">
+            {{ form_errors(form) }}
+        <button id="formSend" class="btn btn-primary btn-block">{{ "Next"|trans }}</button>
+        </div>
+    </div>
+
     {{ form_end(form) }}
 
+    <div class="modal" id="infos">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title">{{ "Discount"|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% trans %}
+                    Afin de bénéficier d'un tarif réduit, chaque visiteur doit pouvoir présenter un justificatif de sa situation.<br/>
+                    Le tarif réduit est attribué aux personnes suivantes : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…
+                    {% endtrans %}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal" id="stopAffiche">{{ "Don't show again"|trans }}</button>
+                    <button class="btn btn-info" data-dismiss="modal">{{ "Close"|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="modal" id="duree">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title">{{ "Half-day"|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% trans %}
+                    En choisissant la formule demi-journée, l'entrée au musée ne se fera qu'a partir de 14h.
+                    {% endtrans %}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">{{ "Close"|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js"></script>
-
-{#
-
-    <script src="{{ asset('js/i18n/datepicker-fr.js') }}"></script>
-    <script src="{{ asset('js/i18n/datepicker-de.js') }}"></script>
-    <script src="{{ asset('js/i18n/datepicker-es.js') }}"></script>
-#}
 
     <script src="{{ asset('js/order.js') }}"></script>
 
 <script>
     var $joursOff = {{ daysoff|json_encode()|raw}};
     var $lang = "{{ app.request.getLocale() }}";
+    var $delete = "{{ "Delete this ticket"|trans }}";
+    var $dateRequired = "{{ "The date is required"|trans }}";
     {% if commande.date is defined %}
     var $orderDate = "{{ commande.date|date('m-d-y') }}";
-
+    var index = ($('div#commande_tickets > div').length);
+    var testIndex = 1;
+    {% else %}
+    var index = $('div#commande_tickets > div').length;
+    var testIndex = 0;
     {% endif %}
 
 

@@ -22,20 +22,22 @@ class CommandeType extends AbstractType
             ->add('email', TextType::class)
             ->add('date', DateType::class, array(
                 'widget' => 'single_text',
-                //'data' => new \DateTime('tomorrow'),
                 'format' => 'dd/MM/yyyy',
-               // 'years' => range(date('Y'), date('Y') + 2),
                 'attr' => array(
-                    'class' => 'date'
+                    'class' => 'date',
                 ),
             ))
             ->add('duree', CheckboxType::class, array(
-                'required' => false
+                'required' => false,
+                'label_attr' => array ('class' => 'duree'),
             ))
             ->add('tickets', CollectionType::class, array(
                 'entry_type' => TicketType::class,
                 'allow_add' => true,
-                'allow_delete' => true
+                'allow_delete' => true,
+                'entry_options' => array(
+                    'label_attr' => array('class'=>'effacer'),
+                    ),
             ))
         ;
     }

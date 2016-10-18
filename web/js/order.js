@@ -1,9 +1,15 @@
 $(document).ready(function() {
+
+    $('.interieur').removeClass('interieur');
+
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#commande_tickets');
 
     // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-    var index = $container.find(':input').length;
+
+   // var index = $('div#commande_tickets > div').length;
+    //$container.find(':input').length;
+
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $('#add_ticket').click(function(e) {
@@ -14,7 +20,7 @@ $(document).ready(function() {
     });
 
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-    if (index == 0) {
+    if ((index == 0)&&(testIndex != 1)) {
         addTicket($container);
     } else {
         // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
@@ -29,8 +35,9 @@ $(document).ready(function() {
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
         var template = $container.attr('data-prototype')
-                .replace(/__name__label__/g, (index+1))
-                .replace(/__name__/g,        index)
+                //.replace(/__name__label__/g, "" )
+                //.replace("col-sm-10","col-sm-12")
+                .replace(/__name__/g, index)
             ;
 
         // On crée un objet jquery qui contient ce template
@@ -50,7 +57,7 @@ $(document).ready(function() {
     function addDeleteLink($prototype) {
 
         // Création du lien
-        var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+        var $deleteLink = $('<div class=" col-sm-offset-8 col-sm-4"><button class="btn btn-danger btn-block">' + $delete + '</button></div> ');
 
         // Ajout du lien
         $prototype.append($deleteLink);
@@ -64,14 +71,19 @@ $(document).ready(function() {
             return false;
         });
     }
+
     $("#commande_date").parent().attr('id','datepicker');
-    $("#commande_date").hide();
+
+      $("#commande_date").hide();
+
     if (typeof $orderDate != 'undefined') {
         $orderDate = new Date($orderDate);
     }
     else {
         $orderDate = new Date();
     }
+
+
     $("#datepicker").datepicker({
         dateFormat: 'dd/mm/yy',
         minDate: 0,
@@ -83,7 +95,7 @@ $(document).ready(function() {
             var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
             return [(day != 2 && day != 0 && $joursOff.indexOf(string) == -1) ];
         },
-            onSelect: function(dateText, inst) {
+        onSelect: function(dateText, inst) {
             var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
             var dateText1 = $.datepicker.formatDate("dd/mm/yy", date);
             $("#commande_date").val(dateText1);
@@ -91,4 +103,29 @@ $(document).ready(function() {
     }).attr("readonly","readonly");
     $( "#datepicker" ).datepicker( "option",
         $.datepicker.regional[$lang] );
+
+
+    $('#commande_date').on("invalid", function(e) {
+        $('#datepicker').before("<div id='pbDate' class='col-sm-12 alert alert-danger'>" + $dateRequired + "</div>");
+        $('#pbDate').delay(2000).hide("slow");
+    });
+
+    var $stopAffiche = 0;
+
+    $(document).on('click', '.discount', function(e) {
+       if ((e.target.checked) && ($stopAffiche == 0)) {
+           $("#infos").modal('show');
+       }
+    });
+
+    $(document).on('click', '.duree', function(e) {
+        if ((e.target.checked)) {
+            $("#duree").modal('show');
+        }
+    });
+
+    $('#stopAffiche').on('click', function() {
+        $stopAffiche = 1;
+    });
+
 });
