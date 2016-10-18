@@ -12,16 +12,22 @@ use LouvreBundle\Form\CommandeType;
 use LouvreBundle\Form\CommandeSearchType;
 
 
-
+/**
+ * Class LouvreController
+ * @package LouvreBundle\Controller
+ * @Route("/{_locale}", requirements={"_locale" = "|en|fr|de|es"}, defaults={"_locale" = "en"})
+ */
 class LouvreController extends Controller
 {
 
     /**
      * @Route("/", name="home")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $locale = $request->getLocale();
         return $this->render('LouvreBundle:home:index.html.twig', array(
+            'locale' => $locale,
             'pageTitle' => "",
         ));
     }

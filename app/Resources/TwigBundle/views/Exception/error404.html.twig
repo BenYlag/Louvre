@@ -1,0 +1,27 @@
+{%  extends "LouvreBundle:home:index.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <img src="{{ asset('img/fantome.jpg') }}"><br/><h1>Oops! An Error Occurred</h1>
+    <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+
+    <div>
+        Something is broken. Please e-mail us at [email] and let us know
+        what you were doing when this error occurred. We will fix it as soon
+        as possible. Sorry for any inconvenience caused.
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.interieur').removeClass('interieur');
+            $('.corps').css('display','block');
+            $('.row .corps').addClass('col-lg-offset-1');
+        });
+
+    </script>
+{% endblock %}

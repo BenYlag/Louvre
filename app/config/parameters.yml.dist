@@ -21,3 +21,4 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
     stripekey: sk_test_eYTkBcEGY9DPpX1c1T9m0NXv
     flood_limit: 1000
+    locale: en

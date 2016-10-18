@@ -114,8 +114,9 @@
                 StripeCheckout.open(opts);
             });
             $('.interieur').removeClass('interieur');
+            $('.corps').css('display','block');
+            $('.row .corps').addClass('col-lg-offset-1');
         });
-        $('.corps').css('display','block');
-        $('.row .corps').addClass('col-lg-offset-1');
+
     </script>
 {% endblock %}
