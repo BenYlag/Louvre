@@ -36,9 +36,7 @@ class OrderMail
 
     public function sendMail(Commande $commande, $orderAmount){
         $subject = "Order " . $commande->getName() . " confirmation";
-      //  $template = 'LouvreBundle:order:mail.html.twig';
         $to = $commande->getEmail();
-       // $body = $this->templating->render('LouvreBundle:order:mail.html.twig', array('commande' => $commande));
         $this->sendMessage($to, $subject, $commande, $orderAmount);
     }
 }
