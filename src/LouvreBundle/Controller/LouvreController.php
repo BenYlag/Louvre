@@ -25,10 +25,7 @@ class LouvreController extends Controller
     public function indexAction(Request $request)
     {
         $locale = $request->getLocale();
-        return $this->render('LouvreBundle:home:index.html.twig', array(
-            'locale' => $locale,
-            'pageTitle' => "",
-        ));
+        return $this->render('LouvreBundle:home:index.html.twig', array('locale' => $locale,'pageTitle' => ""));
     }
 
     /**
@@ -60,40 +57,22 @@ class LouvreController extends Controller
     {
         $commande = new Commande();
         $form = $this->get('form.factory')->create(CommandeType::class,$commande);
-
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $serial = $this->get('louvre.orderserial')->createSerial();
             $commande->setName($serial);
-
             $tickets = $form->get('tickets')->getData();
             foreach ($tickets as $ticket) {
-                $price = $this
-                    ->get('louvre.ticketprice')
-                    ->pricing($ticket->getBirth(), $ticket->getDiscount());
+                $price = $this->get('louvre.ticketprice')->pricing($ticket->getBirth(), $ticket->getDiscount());
                 $ticket->setCommande($commande);
                 $ticket->setPrice($price);
             }
-
             $em->persist($commande);
             $em->flush();
-
-            return $this->redirectToRoute('resumeOrder', array(
-                'name' => $commande->getName(),
-                'pageTitle' => "Synthese",
-            ));
-
+            return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName(),'pageTitle' => "Synthese"));
         }
-        $daysOff = $this
-            ->get('louvre.daysoff')
-            ->daysOff();
-
-
-        return $this->render('LouvreBundle:order:first.html.twig', array(
-            'form' => $form->createView(),
-            'daysoff' => $daysOff,
-            'pageTitle' => "Order",
-        ));
+        $daysOff = $this->get('louvre.daysoff')->daysOff();
+        return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'daysoff' => $daysOff, 'pageTitle' => "Order"));
     }
 
     /**
@@ -106,25 +85,19 @@ class LouvreController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $form = $this->get('form.factory')->create(CommandeType::class,$commande);
-
         $originalTickets = new ArrayCollection();
-
         foreach ($commande->getTickets() as $ticket){
             $originalTickets->add($ticket);
         }
-
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-
             foreach ($originalTickets as $ticket) {
                 if (false === $commande->getTickets()->contains($ticket)) {
                     $em->remove($ticket);
                 }
             }
-
             $tickets = $form->get('tickets')->getData();
             foreach ($tickets as $ticket) {
-                $price = $this->get('louvre.ticketprice')
-                    ->pricing($ticket->getBirth(), $ticket->getDiscount());
+                $price = $this->get('louvre.ticketprice')->pricing($ticket->getBirth(), $ticket->getDiscount());
                 $ticket->setCommande($commande);
                 $ticket->setPrice($price);
             }
@@ -132,21 +105,11 @@ class LouvreController extends Controller
             $em->persist($commande);
             $em->flush();
 
-            return $this->redirectToRoute('resumeOrder', array(
-                'name' => $commande->getName(),
-                'pageTitle' => "Synthese",
-            ));
+            return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName(), 'pageTitle' => "Synthese"));
         }
-        $daysOff = $this
-            ->get('louvre.daysoff')
-            ->daysOff();
+        $daysOff = $this->get('louvre.daysoff')->daysOff();
 
-        return $this->render('LouvreBundle:order:first.html.twig', array(
-            'form' => $form->createView(),
-            'commande' => $commande,
-            'daysoff' => $daysOff,
-            'pageTitle' => "Edit Order",
-        ));
+        return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'commande' => $commande, 'daysoff' => $daysOff,'pageTitle' => "Edit Order"));
     }
 
 
@@ -158,20 +121,11 @@ class LouvreController extends Controller
      */
     public function orderResumeAction(Request $request, Commande $commande)
     {
-        $orderAmount = $this
-            ->container
-            ->get('louvre.ordertotalprice')
-            ->calculatePrice($commande);
-
+        $orderAmount = $this->container->get('louvre.ordertotalprice')->calculatePrice($commande);
         if ($request->isMethod('POST')) {
             $token = $request->request->get('stripeToken');
-            $paiementResult = $this
-                ->container
-                ->get('louvre.orderstripecharge')
-                ->orderCharge($commande, $orderAmount, $token);
-
+            $paiementResult = $this->container->get('louvre.orderstripecharge')->orderCharge($commande, $orderAmount, $token);
             $em = $this->getDoctrine()->getManager();
-
             if ($paiementResult == "ok") {
                 $commande->setStatus($commande::COMMANDE_PAYED);
                 $this->get('louvre.ordermail')->sendMail($commande, $orderAmount);
@@ -179,16 +133,9 @@ class LouvreController extends Controller
             else {
                 $commande->setStatus($commande::COMMANDE_PAY_PB);
             }
-
             $em->persist($commande);
             $em->flush();
-
         }
-        return $this->render('LouvreBundle:order:second.html.twig', array(
-            'commande' => $commande,
-            'orderAmount'=> $orderAmount,
-            'pageTitle' => "Synthese",
-        ));
+        return $this->render('LouvreBundle:order:second.html.twig', array('commande' => $commande, 'orderAmount'=> $orderAmount, 'pageTitle' => "Synthese"));
     }
-
 }
