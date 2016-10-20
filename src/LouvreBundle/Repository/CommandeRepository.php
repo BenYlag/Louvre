@@ -3,7 +3,6 @@
 namespace LouvreBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * CommandeRepository

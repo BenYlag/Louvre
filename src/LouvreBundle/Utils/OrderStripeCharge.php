@@ -23,7 +23,7 @@ class OrderStripeCharge
 
         // Create a charge: this will charge the user's card
         try {
-            $charge = \Stripe\Charge::create(array(
+            \Stripe\Charge::create(array(
                 "amount" => $orderAmount, // Amount in cents
                 "currency" => "eur",
                 "source" => $token,

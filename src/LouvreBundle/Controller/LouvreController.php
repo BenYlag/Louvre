@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response as Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use LouvreBundle\Entity\Commande;
 use LouvreBundle\Form\CommandeType;
-use LouvreBundle\Form\CommandeSearchType;
 use LouvreBundle\Form\ConsultType;
 
 /**

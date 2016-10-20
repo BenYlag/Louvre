@@ -14,7 +14,7 @@ class DaysOff
         $this->em = $em;
         $this->flood_Limit = $flood_Limit;
     }
-    public function jours_feries($annee)
+    public function joursFeries($annee)
     {
         /* URL            : http://www.phpsources.org/scripts641-PHP.htm  */
         $dimanche_paques = date("d-m-Y", easter_date($annee));
@@ -40,10 +40,10 @@ class DaysOff
         return $jours_feries;
     }
 
-    public function jours_feries_deux_ans($annee) {
+    public function joursFeriesDeuxAns($annee) {
         $jours_feries = array();
         for ($i=$annee;$i<=($annee + 2);$i++) {
-            $jours_feries = array_merge($jours_feries, $this->jours_feries(strval($i)));
+            $jours_feries = array_merge($jours_feries, $this->joursFeries(strval($i)));
         }
         sort($jours_feries);
         return $jours_feries;
@@ -53,7 +53,7 @@ class DaysOff
         if (is_null($date)) {
             $date = date('Y');
         }
-        $daysOff = $this->jours_feries_deux_ans($date);
+        $daysOff = $this->joursFeriesDeuxAns($date);
         $repository = $this->em->getRepository('LouvreBundle:Commande');
         $fullDays = $repository->getDaysOverLimitTickets($this->flood_Limit);
         foreach ($fullDays as $key => $fullDay) {
