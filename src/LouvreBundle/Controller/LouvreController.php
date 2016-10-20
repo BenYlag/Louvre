@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use LouvreBundle\Entity\Commande;
 use LouvreBundle\Form\CommandeType;
 use LouvreBundle\Form\CommandeSearchType;
-
+use LouvreBundle\Form\ConsultType;
 
 /**
  * Class LouvreController
@@ -36,42 +36,20 @@ class LouvreController extends Controller
      * @Route("/consult", name="consult")
      */
     public function consultAction(Request $request) {
-
-        if ($request->isMethod('POST')) {
-            try{
-                $orderName = $request->request->get('name');
-                $orderMail = $request->request->get('email');
-                $commande =  $this->getDoctrine()
-                    ->getRepository('LouvreBundle:Commande')
-                    ->findOneBy(array ('name' => $orderName,
-                        'email' => $orderMail));
-
-                $orderAmount = $this
-                    ->container
-                    ->get('louvre.ordertotalprice')
-                    ->calculatePrice($commande);
-
-                return $this->redirectToRoute('resumeOrder', array(
-                    'name' => $commande->getName(),
-                    'orderAmount'=> $orderAmount,
-                    'pageTitle' => "Synthese",
-                ));
-            }
-            catch(\Exception $e){
-                error_log($e->getMessage());
-                return $this->render('LouvreBundle:order:consult.html.twig', array(
-                    'pageTitle' => "Find my order",
-                    'error' => 'erreur',
-                ));
-
-            }
-
-
+        $form = $this->get('form.factory')->create(ConsultType::class);
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                $data = $form->getData();
+                $orderName = $data['orderName'];
+                $orderEmail = $data['orderEmail'];
+                $commande =  $this->getDoctrine()->getRepository('LouvreBundle:Commande')->findOneBy(array ('name' => "$orderName", 'email' => "$orderEmail"));
+                if (!$commande) {
+                    return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order", 'error' => 'erreur'));
+                }
+                else {
+                return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
+                }
         }
-        return $this->render('LouvreBundle:order:consult.html.twig', array(
-            'pageTitle' => "Find my order",
-        ));
-
+        return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order"));
     }
 
     /**

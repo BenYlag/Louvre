@@ -1,8 +1,8 @@
 {
     "name": "beny/checkout",
-    "descritpion": "P3 OC Billetterie Louvre",
     "license": "proprietary",
     "type": "project",
+    "description": "P3 OC Billetterie Louvre",
     "autoload": {
         "psr-4": {
             "": "src/"

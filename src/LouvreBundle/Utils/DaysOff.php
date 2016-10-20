@@ -61,13 +61,7 @@ class DaysOff
                 array_push($daysOff, date_format($valeur, 'd/m/Y'));
             }
         }
-        $maintenant = date("H");
-        $maintenant = (int)$maintenant;
-        $aujourdhui = new \DateTime('today');
 
-        if ($maintenant > 13) {
-            array_push($daysOff, date_format($aujourdhui, 'd/m/Y'));
-        }
         return $daysOff;
     }
 }

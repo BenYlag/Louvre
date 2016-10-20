@@ -78,7 +78,6 @@ class Commande
      * @Assert\Valid()
      */
     private $tickets;
-
     /**
      * Get id
      *
@@ -251,6 +250,13 @@ class Commande
         if (($jourResa == $aujourdhui) && (!$this->getDuree()) && ($maintenant > 13)) {
             $context->buildViolation('order.error.hour')
                 ->atPath('duree')
+                ->addViolation();
+        }
+
+        $nbTickets = $this->getTickets()->count();
+        if ($nbTickets == 0) {
+            $context->buildViolation('order.error.tickets')
+                ->atPath('tickets')
                 ->addViolation();
         }
     }

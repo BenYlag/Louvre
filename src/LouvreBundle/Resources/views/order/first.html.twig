@@ -1,7 +1,10 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
 {% block stylesheets %}
-    {{ parent() }}
+
+
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css" rel="stylesheet">
+    {{ parent() }}
+
 {% endblock %}
 
 {% block body %}
@@ -11,16 +14,8 @@
     {{ form_row(form.date, {'label':  "order.date"|trans }) }}
     {{ form_row(form.email, {'label':  "order.email"|trans }) }}
     {{ form_row(form.duree, {'label':  "order.duree"|trans }) }}
-    {#
-       {% for ticket in form.tickets %}
-           {{ form_row(ticket.name, {'label':'order.ticket.name'}) }}
-           {{ form_row(ticket.surname, {'label':'order.ticket.surname'}) }}
-           {{ form_row(ticket.birth, {'label':'order.ticket.birth'}) }}
-           {{ form_row(ticket.country, {'label':'order.ticket.country'}) }}
-           {{ form_row(ticket.discount, {'label':'order.ticket.discount'}) }}
-       {% endfor %}
-    #}
-     {{ form_row(form.tickets, {'label':  "order.tickets"|trans }) }}
+
+    {{ form_row(form.tickets, {'label':  "order.tickets"|trans }) }}
 
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
@@ -67,6 +62,24 @@
                 <div class="modal-body">
                     {% trans %}
                     En choisissant la formule demi-journée, l'entrée au musée ne se fera qu'a partir de 14h.
+                    {% endtrans %}
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">{{ "Close"|trans }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="supprimer">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+                    <h4 class="modal-title">{{ "Delete"|trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {% trans %}
+                    La commande doit au moins contenir un billet.
                     {% endtrans %}
                 </div>
                 <div class="modal-footer">

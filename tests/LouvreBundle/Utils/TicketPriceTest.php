@@ -6,7 +6,6 @@ use LouvreBundle\Utils\TicketPrice;
 use LouvreBundle\Entity\Price;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 class TicketPriceTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +21,7 @@ class TicketPriceTest extends \PHPUnit_Framework_TestCase
 
         // Now, mock the repository so it returns the mock of the employee
         $priceRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
-        $priceRepository->expects($this->once())->method('find')->will($this->returnValue($price));
+        $priceRepository->expects($this->once())->method('findPriceForAge')->will($this->returnValue($price));
 
         // Last, mock the EntityManager to return the mock of the repository
         $entityManager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();

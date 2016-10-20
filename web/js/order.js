@@ -57,15 +57,17 @@ $(document).ready(function() {
     function addDeleteLink($prototype) {
 
         // Création du lien
-        var $deleteLink = $('<div class=" col-sm-offset-8 col-sm-4"><button class="btn btn-danger btn-block">' + $delete + '</button></div> ');
+        var $deleteLink = $('<div class="col-sm-offset-8 col-sm-4"><button class="btn btn-danger btn-block delete">' + $delete + '</button></div> ');
 
-        // Ajout du lien
+            // Ajout du lien
         $prototype.append($deleteLink);
 
         // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
         $deleteLink.click(function(e) {
+            if (($('div#commande_tickets > div').length) > 1) {
 
-            $prototype.remove();
+                $prototype.remove();
+            } else {   $("#supprimer").modal('show');}
 
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
@@ -78,9 +80,11 @@ $(document).ready(function() {
 
     if (typeof $orderDate != 'undefined') {
         $orderDate = new Date($orderDate);
+        var $testDate = true;
     }
     else {
         $orderDate = new Date();
+        var $testDate = false;
     }
 
 
@@ -99,16 +103,33 @@ $(document).ready(function() {
             var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
             var dateText1 = $.datepicker.formatDate("dd/mm/yy", date);
             $("#commande_date").val(dateText1);
+            var $today = jQuery.datepicker.formatDate('dd/mm/yy',new Date());
+            if (dateText1 == $today) {
+            var $heure = new Date().getHours();
+            if ($heure >= 14) {
+                $('#commande_duree').prop('checked', true);
+                $('#commande_duree').attr('disabled', true);
+                 }
+            }
+            else {$('#commande_duree').removeAttr('disabled');
+                $('#commande_duree').prop('checked', false);}
         },
+
     }).attr("readonly","readonly");
     $( "#datepicker" ).datepicker( "option",
         $.datepicker.regional[$lang] );
-
 
     $('#commande_date').on("invalid", function(e) {
         $('#datepicker').before("<div id='pbDate' class='col-sm-12 alert alert-danger'>" + $dateRequired + "</div>");
         $('#pbDate').delay(2000).hide("slow");
     });
+
+    $('.ui-state-highlight').removeClass('ui-state-highlight');
+    if (!$testDate) {
+    $('.ui-state-active').removeClass('ui-state-active');
+    $('.ui-state-hover').removeClass('ui-state-hover');
+    }
+
 
     var $stopAffiche = 0;
 
@@ -128,4 +149,7 @@ $(document).ready(function() {
         $stopAffiche = 1;
     });
 
+    $('form').submit(function () {
+        $('#commande_duree').removeAttr('disabled');
+    });
 });

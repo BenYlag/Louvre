@@ -128,6 +128,12 @@ table
 thead th, td {
     border-bottom: 1px solid #CC7832;
 }
+/*http://stackoverflow.com/questions/731018/jquery-ui-datepicker-dont-highlight-today-when-it-is-also-selected*/
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background: 50% 50% #F58400;
+    border:1px solid #FFAF0F;
+    color:#FFFFFF;
+}
 
 
 /*!

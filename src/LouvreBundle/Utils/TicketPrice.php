@@ -19,7 +19,7 @@ class TicketPrice
      * @param $discount
      * @return mixed
      */
-    public function pricing($birthdate, $discount)
+    public function pricing(\DateTime $birthdate, $discount)
     {
         $repository = $this->em->getRepository('LouvreBundle:Price');
 

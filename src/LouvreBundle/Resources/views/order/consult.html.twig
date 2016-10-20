@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block body %}
+    {#
 <div class="row" >
     <div class="col-xs-12" id="searchOrder">
 <form method="post">
@@ -17,6 +18,12 @@
     <br/>
     <input type="submit" value="{{ "Search"|trans }}" class="btn btn-success">
 </form></div></div>
+#}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="{{ "Search"|trans }}" class="btn btn-success">
+    {{ form_end(form) }}
+
 
 {% if error is defined %}
     <div class="row">
