@@ -164,10 +164,11 @@ class LouvreController extends Controller
             ->calculatePrice($commande);
 
         if ($request->isMethod('POST')) {
+            $token = $request->request->get('stripeToken');
             $paiementResult = $this
                 ->container
                 ->get('louvre.orderstripecharge')
-                ->orderCharge($commande, $orderAmount);
+                ->orderCharge($commande, $orderAmount, $token);
 
             $em = $this->getDoctrine()->getManager();
 

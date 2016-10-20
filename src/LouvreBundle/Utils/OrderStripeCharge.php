@@ -12,14 +12,14 @@ class OrderStripeCharge
      $this->stripekey = $stripekey;
     }
 
-    public function orderCharge(Commande $commande, $orderAmount)
+    public function orderCharge(Commande $commande, $orderAmount, $token)
     {
         // Set your secret key: remember to change this to your live secret key in production
         // See your keys here: https://dashboard.stripe.com/account/apikeys
         \Stripe\Stripe::setApiKey($this->stripekey);
 
         // Get the credit card details submitted by the form
-        $token = $_POST['stripeToken'];
+        //$token = $_POST['stripeToken'];
 
         // Create a charge: this will charge the user's card
         try {
