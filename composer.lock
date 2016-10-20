@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e8ed5d185922a03990809fb2689230ca",
-    "content-hash": "8efa6c3ecdf6138cb5b9319d7bde9746",
+    "hash": "602d78abbad2f0d6eda7e218faeff938",
+    "content-hash": "90beb623316824d9a22be407b6d04f38",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1072,16 +1072,16 @@
         },
         {
             "name": "paragonie/random_compat",
-            "version": "v2.0.2",
+            "version": "v2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/random_compat.git",
-                "reference": "088c04e2f261c33bed6ca5245491cfca69195ccf"
+                "reference": "c0125896dbb151380ab47e96c621741e79623beb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/088c04e2f261c33bed6ca5245491cfca69195ccf",
-                "reference": "088c04e2f261c33bed6ca5245491cfca69195ccf",
+                "url": "https://api.github.com/repos/paragonie/random_compat/zipball/c0125896dbb151380ab47e96c621741e79623beb",
+                "reference": "c0125896dbb151380ab47e96c621741e79623beb",
                 "shasum": ""
             },
             "require": {
@@ -1116,7 +1116,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-04-03 06:00:07"
+            "time": "2016-10-17 15:23:22"
         },
         {
             "name": "psr/cache",
@@ -1371,16 +1371,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v4.0.0",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "1b9905dc2cdf870e0f9ee9c82de1f7e4f5b972a1"
+                "reference": "8de6d4ba1dce46f22063e10b4c8e90b36b2fab36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/1b9905dc2cdf870e0f9ee9c82de1f7e4f5b972a1",
-                "reference": "1b9905dc2cdf870e0f9ee9c82de1f7e4f5b972a1",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/8de6d4ba1dce46f22063e10b4c8e90b36b2fab36",
+                "reference": "8de6d4ba1dce46f22063e10b4c8e90b36b2fab36",
                 "shasum": ""
             },
             "require": {
@@ -1422,7 +1422,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2016-09-28 17:53:54"
+            "time": "2016-10-18 20:15:43"
         },
         {
             "name": "swiftmailer/swiftmailer",
