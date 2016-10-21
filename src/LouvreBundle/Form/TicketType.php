@@ -27,9 +27,18 @@ class TicketType extends AbstractType
                 'label' => 'ticket.surname',
             ))
             ->add('birth', DateType::class, array(
+                'widget' => 'single_text',
+                'format' => 'dd/MM/yyyy',
                 'years' => range(date('Y') - 110, date('Y')),
                 'label' => 'ticket.birth',
+                'attr' => array(
+                    'class' => 'date birthtest',
+                ),
             ))
+        /*    ->add('birth', DateType::class, array(
+                'years' => range(date('Y') - 110, date('Y')),
+                'label' => 'ticket.birth',
+            ))*/
             ->add('country', CountryType::class, array(
                 'preferred_choices' => array('FR', 'GB', 'DE', 'ES'),
                 'label' => 'ticket.country',

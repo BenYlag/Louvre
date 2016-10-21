@@ -14,18 +14,25 @@ $(document).ready(function() {
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $('#add_ticket').click(function(e) {
         addTicket($container);
-
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
     });
-
+        var $retest = -1;
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     if ((index == 0)&&(testIndex != 1)) {
         addTicket($container);
+        addDatePicker();
     } else {
         // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
         $container.children('div').each(function() {
+            $retest = $retest + 1;
+            console.log($(this));
             addDeleteLink($(this));
+          //  $("#commande_tickets_"+$retest+"_birth").attr('id','datepicker_'+$retest);
+          //  $("#commande_tickets_"+$retest+"_name").before("<span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span>");
+            //$(".input-group-addon").before("<div class=\"input-group col-xs-6\">");
+          // $(this).closest('div[class^="input-group"]').append("<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span>");
+            addDatePicker2($retest);
         });
     }
 
@@ -36,9 +43,15 @@ $(document).ready(function() {
         // - le texte "__name__" qu'il contient par le numéro du champ
         var template = $container.attr('data-prototype')
                 //.replace(/__name__label__/g, "" )
-                //.replace("col-sm-10","col-sm-12")
+                .replace("<input","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><input")
                 .replace(/__name__/g, index)
+                .replace("<input type=\"text\" id=\"commande_tickets_"+index+"_surname\"","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><input type=\"text\" id=\"commande_tickets_"+index+"_surname\"")
+               .replace("<select id=\"commande_tickets_"+index+"_country\"","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><select id=\"commande_tickets_"+index+"_country\"")
+         //   .replace("<select id=\"commande_tickets_"+index+"_birth","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><select id=\"commande_tickets_"+index+"_birth")
+            .replace("<input type=\"text\" id=\"commande_tickets_"+index+"_birth","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><input type=\"text\" id=\"datepicker_"+index)
             ;
+
+   // console.log(template);
 
         // On crée un objet jquery qui contient ce template
         var $prototype = $(template);
@@ -48,9 +61,10 @@ $(document).ready(function() {
 
         // On ajoute le prototype modifié à la fin de la balise <div>
         $container.append($prototype);
-
+        addDatePicker();
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         index++;
+
     }
 
     // La fonction qui ajoute un lien de suppression d'une catégorie
@@ -74,9 +88,31 @@ $(document).ready(function() {
         });
     }
 
+    function addDatePicker() {
+       // $(".birthtest").attr('id','datepicker_'+index);
+
+        $("#datepicker_"+index).datepicker({
+            startView: 3,
+            language: "fr",
+            format: "dd/mm/yyyy",
+            autoclose: true
+        });
+    }
+    function addDatePicker2() {
+    console.log($retest);
+        $("#datepicker_"+$retest).datepicker({
+            startView: 3,
+            language: "fr",
+            format: "dd/mm/yyyy",
+            autoclose: true
+        });
+    }
+
+
+
     $("#commande_date").parent().attr('id','datepicker');
 
-      $("#commande_date").hide();
+ $("#commande_date").hide();
 
     if (typeof $orderDate != 'undefined') {
         $orderDate = new Date($orderDate);
@@ -88,7 +124,8 @@ $(document).ready(function() {
     }
 
 
-    $("#datepicker").datepicker({
+   /*
+   $("#datepicker").datepicker({
         dateFormat: 'dd/mm/yy',
         minDate: 0,
         maxDate: "+2Y",
@@ -118,6 +155,36 @@ $(document).ready(function() {
     }).attr("readonly","readonly");
     $( "#datepicker" ).datepicker( "option",
         $.datepicker.regional[$lang] );
+*/
+    $("#datepicker").datepicker({
+        format: "dd/mm/yyyy",
+        todayBtn: "linked",
+        startDate: "today",
+        language: $lang,
+        daysOfWeekDisabled: "0,2",
+        datesDisabled: $joursOff,
+    });
+
+    $('#datepicker').on('changeDate', function(event) {
+        var date = event.format();
+        var $today =  $.datepicker.formatDate('dd/mm/yy', new Date());
+
+        console.log(date);
+        console.log($today);
+    if (date == $today) {
+        var $heure = new Date().getHours();
+        if ($heure >= 14) {
+
+            $('#commande_duree').prop('checked', true);
+            $('#commande_duree').attr('disabled', true);
+        }
+    }
+        else {
+            $('#commande_duree').removeAttr('disabled');
+            $('#commande_duree').prop('checked', false);
+        }
+
+    });
 
     $('#commande_date').on("invalid", function(e) {
         $('#datepicker').before("<div id='pbDate' class='col-sm-12 alert alert-danger'>" + $dateRequired + "</div>");
@@ -152,4 +219,9 @@ $(document).ready(function() {
     $('form').submit(function () {
         $('#commande_duree').removeAttr('disabled');
     });
+
+ $('.duree').closest('div[class^="checkbox"]').append('  <i class="fa fa-question-circle" aria-hidden="true"></i>');
+
+
+
 });

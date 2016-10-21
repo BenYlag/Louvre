@@ -3,19 +3,96 @@
 
 
     <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css" rel="stylesheet">
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet">
+
     {{ parent() }}
 
 {% endblock %}
 
 {% block body %}
 
+}
+
 
     {{ form_start(form) }}
-    {{ form_row(form.date, {'label':  "order.date"|trans }) }}
-    {{ form_row(form.email, {'label':  "order.email"|trans }) }}
-    {{ form_row(form.duree, {'label':  "order.duree"|trans }) }}
 
+
+    {{ form_row(form.date, {'label':  "order.date"|trans }) }}
+
+    <div class="form-group">
+
+      {{ form_label(form.email) }}
+
+      {{ form_errors(form.email) }}
+
+      <div class="input-group col-xs-6">
+      <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+      {{ form_widget(form.email) }}
+
+      </div>
+    </div>
+
+
+    {#  {{ form_row(form.email, {'label':  "order.email"|trans }) }}  #}
+
+
+
+   {{ form_row(form.duree, {'label':  "order.duree"|trans }) }}
+
+    {#
     {{ form_row(form.tickets, {'label':  "order.tickets"|trans }) }}
+    #}
+
+<div class="form-group">
+        {{ form_label(form.tickets) }}
+        {{ form_errors(form.tickets) }}
+    <div id="commande_tickets" data-prototype="{{ form_widget(form.tickets.vars.prototype)|e('html_attr') }}">
+    </div>
+        {% for ticket in form.tickets %}
+<div id="commande_tickets_{{ loop.index }}">
+  <div class="form-group">
+        {{ form_label(ticket.name) }}
+        {{ form_errors(ticket.name) }}
+        <div class="input-group col-xs-6">
+            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+            {{ form_widget(ticket.name) }}
+        </div>
+
+        {{ form_label(ticket.surname) }}
+        {{ form_errors(ticket.surname) }}
+        <div class="input-group col-xs-6">
+            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+            {{ form_widget(ticket.surname) }}
+        </div>
+
+        {{ form_label(ticket.birth) }}
+        {{ form_errors(ticket.birth) }}
+        <div class="input-group col-xs-6">
+            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+            {{ form_widget(ticket.birth) }}
+        </div>
+
+            {{ form_label(ticket.country) }}
+            {{ form_errors(ticket.country) }}
+            <div class="input-group col-xs-6">
+                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                {{ form_widget(ticket.country) }}
+            </div>
+
+            {{ form_label(ticket.discount) }}
+            {{ form_errors(ticket.discount) }}
+            <div class="input-group col-xs-6">
+                {{ form_widget(ticket.discount) }}
+                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+            </div>
+
+
+  </div>
+</div>
+        {% endfor %}
+</div>
 
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
@@ -94,8 +171,11 @@
     {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js"></script>
-
     <script src="{{ asset('js/order.js') }}"></script>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+
+
 
 <script>
     var $joursOff = {{ daysoff|json_encode()|raw}};

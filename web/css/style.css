@@ -134,7 +134,9 @@ thead th, td {
     border:1px solid #FFAF0F;
     color:#FFFFFF;
 }
-
+.fa-envelope {
+    color: #FFAF0F;
+}
 
 /*!
  * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
