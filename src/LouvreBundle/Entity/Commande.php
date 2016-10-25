@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  */
 class Commande
 {
-    const COMMANDE_STARTED = "starded";
+    const COMMANDE_STARTED = "started";
     const COMMANDE_MODIFIED = "modified";
     const COMMANDE_PAYED = "pay_success";
     const COMMANDE_PAY_PB = "pay_failed";

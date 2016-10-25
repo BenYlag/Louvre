@@ -58,6 +58,12 @@ body, caption {
     flex-direction: row;
     justify-content: center;
 }
+.icones {
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 body {
 
     background: url("../img/bckgd.jpg") no-repeat;
@@ -94,6 +100,10 @@ h1{
 [class*="col-"] {
     border: 2px solid yellow;
 }*/
+
+.active {
+    border-bottom: 2px solid;
+}
 
 .btn{
     white-space:normal !important;
@@ -134,6 +144,18 @@ thead th, td {
     border:1px solid #FFAF0F;
     color:#FFFFFF;
 }
+.fa {
+    color: #FFAF0F;
+}
+
+.green {
+    color: green;
+}
+
+.desactive {
+    color: rgba(245,132,0,0.5);
+}
+
 
 
 /*!

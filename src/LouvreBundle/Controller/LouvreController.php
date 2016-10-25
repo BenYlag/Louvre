@@ -3,6 +3,7 @@
 namespace LouvreBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use LouvreBundle\Form\TicketType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
