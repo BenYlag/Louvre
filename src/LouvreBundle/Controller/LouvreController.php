@@ -50,21 +50,6 @@ class LouvreController extends Controller
     }
 
     /**
-     * @Route("/ticket", name="ticket")
-     */
-    public function ticketAction(Request $request) {
-        $form = $this->get('form.factory')->create(TicketType::class);
-       /* if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-                return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order", 'error' => 'erreur'));
-            }
-            else {
-                return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
-            }
-        }*/
-        return $this->render('LouvreBundle:order:ticket.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order"));
-    }
-
-    /**
      * @Route("/order", name="createOrder")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
