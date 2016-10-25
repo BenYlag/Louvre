@@ -1,19 +1,79 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
 {% block stylesheets %}
 
-
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css" rel="stylesheet">
-
-
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.css" rel="stylesheet">
 
     {{ parent() }}
 
 {% endblock %}
 
-{% block body %}
+{% block icones %}
+    <div class="col-xs-4 icones ">
+        <i id="order" class="fa fa-ticket fa-2x" aria-hidden="true"></i>
+    </div>
+    <div class="col-xs-4 icones">
+        <i id="validate" class="fa fa-check fa-2x" aria-hidden="true"></i>
+    </div>
+    <div class="col-xs-4 icones">
+        <i id="pay" class="fa fa-euro fa-2x" aria-hidden="true"></i>
+    </div>
 
-}
+{% endblock %}
+
+
+{% form_theme form _self %}
+
+{% block text_widget %}
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+        {{ block('form_widget_simple') }}
+        </div>
+{% endblock %}
+
+{% block choice_widget %}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-globe" aria-hidden="true"></i></span>
+        {{ block('choice_widget_collapsed') }}
+    </div>
+{% endblock %}
+
+{% block date_widget %}
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+{% block checkbox_radio_label %}
+    {# Do not display the label if widget is not defined in order to prevent double label rendering #}
+    {% if widget is defined %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if parent_label_class is defined %}
+            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) %}
+        {% endif %}
+        {% if label is not same as(false) and label is empty %}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{- widget|raw }} {{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}
+        <i class="fa fa-question-circle" aria-hidden="true"></i>
+        </label>
+    {% endif %}
+{% endblock checkbox_radio_label %}
+
+
+
+
+{% block body %}
 
 
     {{ form_start(form) }}
@@ -21,78 +81,14 @@
 
     {{ form_row(form.date, {'label':  "order.date"|trans }) }}
 
-    <div class="form-group">
 
-      {{ form_label(form.email) }}
-
-      {{ form_errors(form.email) }}
-
-      <div class="input-group col-xs-6">
-      <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-      {{ form_widget(form.email) }}
-
-      </div>
-    </div>
-
-
-    {#  {{ form_row(form.email, {'label':  "order.email"|trans }) }}  #}
+    {{ form_row(form.email, {'label':  "order.email"|trans }) }}
 
 
 
    {{ form_row(form.duree, {'label':  "order.duree"|trans }) }}
 
-    {#
     {{ form_row(form.tickets, {'label':  "order.tickets"|trans }) }}
-    #}
-
-<div class="form-group">
-        {{ form_label(form.tickets) }}
-        {{ form_errors(form.tickets) }}
-    <div id="commande_tickets" data-prototype="{{ form_widget(form.tickets.vars.prototype)|e('html_attr') }}">
-    </div>
-        {% for ticket in form.tickets %}
-<div id="commande_tickets_{{ loop.index }}">
-  <div class="form-group">
-        {{ form_label(ticket.name) }}
-        {{ form_errors(ticket.name) }}
-        <div class="input-group col-xs-6">
-            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-            {{ form_widget(ticket.name) }}
-        </div>
-
-        {{ form_label(ticket.surname) }}
-        {{ form_errors(ticket.surname) }}
-        <div class="input-group col-xs-6">
-            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-            {{ form_widget(ticket.surname) }}
-        </div>
-
-        {{ form_label(ticket.birth) }}
-        {{ form_errors(ticket.birth) }}
-        <div class="input-group col-xs-6">
-            <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-            {{ form_widget(ticket.birth) }}
-        </div>
-
-            {{ form_label(ticket.country) }}
-            {{ form_errors(ticket.country) }}
-            <div class="input-group col-xs-6">
-                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                {{ form_widget(ticket.country) }}
-            </div>
-
-            {{ form_label(ticket.discount) }}
-            {{ form_errors(ticket.discount) }}
-            <div class="input-group col-xs-6">
-                {{ form_widget(ticket.discount) }}
-                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-            </div>
-
-
-  </div>
-</div>
-        {% endfor %}
-</div>
 
     <div class="row">
         <div class="col-sm-offset-3 col-sm-6">
@@ -170,27 +166,30 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/i18n/jquery-ui-i18n.min.js"></script>
-    <script src="{{ asset('js/order.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.{{ app.request.getLocale() }}.min.js"></script>
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
-
-
+   <script src="{{ asset('js/order.js') }}"></script>
 
 <script>
     var $joursOff = {{ daysoff|json_encode()|raw}};
     var $lang = "{{ app.request.getLocale() }}";
     var $delete = "{{ "Delete this ticket"|trans }}";
     var $dateRequired = "{{ "The date is required"|trans }}";
+
     {% if commande.date is defined %}
     var $orderDate = "{{ commande.date|date('m-d-y') }}";
     var index = ($('div#commande_tickets > div').length);
-    var testIndex = 1;
+
     {% else %}
     var index = $('div#commande_tickets > div').length;
     var testIndex = 0;
+
     {% endif %}
 
+    $('#order').parent().addClass('active');
+    $('#pay').addClass('desactive');
+    $('#validate').addClass('desactive');
 
 
 </script>

@@ -3,6 +3,7 @@
 namespace LouvreBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use LouvreBundle\Form\TicketType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -46,6 +47,21 @@ class LouvreController extends Controller
                 }
         }
         return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order"));
+    }
+
+    /**
+     * @Route("/ticket", name="ticket")
+     */
+    public function ticketAction(Request $request) {
+        $form = $this->get('form.factory')->create(TicketType::class);
+       /* if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+                return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order", 'error' => 'erreur'));
+            }
+            else {
+                return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
+            }
+        }*/
+        return $this->render('LouvreBundle:order:ticket.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order"));
     }
 
     /**

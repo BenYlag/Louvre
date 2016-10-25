@@ -23,16 +23,16 @@ class DaysOff
         $lundi_pentecote = date("d/m/Y", strtotime("$dimanche_paques +50 day"));
 
         $jours_feries = array(
-            date("d/m/Y", strtotime($dimanche_paques)),
-            $lundi_paques,
-            $lundi_pentecote,
-            $jeudi_ascension,
-            "01/01/$annee",
+           // date("d/m/Y", strtotime($dimanche_paques)),
+          //  $lundi_paques,
+          //  $lundi_pentecote,
+         //   $jeudi_ascension,
+          //  "01/01/$annee",
             "01/05/$annee",
-            "08/05/$annee",
-            "15/05/$annee",
-            "14/07/$annee",
-            "11/11/$annee",
+          //  "08/05/$annee",
+       //     "15/05/$annee",
+       //     "14/07/$annee",
+        //    "11/11/$annee",
             "01/11/$annee",
             "25/12/$annee",
         );
@@ -61,7 +61,12 @@ class DaysOff
                 array_push($daysOff, date_format($valeur, 'd/m/Y'));
             }
         }
+        $maintenant = date("H");
+        $maintenant = (int)$maintenant;
+        $aujourdhui = new \DateTime('today');
 
+        if ($maintenant > 16) {
+          array_push($daysOff, date_format($aujourdhui, 'd/m/Y'));
         return $daysOff;
-    }
+    }}
 }

@@ -17,22 +17,19 @@ $(document).ready(function() {
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
     });
-        var $retest = -1;
+
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     if ((index == 0)&&(testIndex != 1)) {
         addTicket($container);
-        addDatePicker();
-    } else {
+    }
+    else {
         // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
         $container.children('div').each(function() {
-            $retest = $retest + 1;
-            console.log($(this));
+           // console.log(index);
             addDeleteLink($(this));
-          //  $("#commande_tickets_"+$retest+"_birth").attr('id','datepicker_'+$retest);
-          //  $("#commande_tickets_"+$retest+"_name").before("<span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span>");
-            //$(".input-group-addon").before("<div class=\"input-group col-xs-6\">");
-          // $(this).closest('div[class^="input-group"]').append("<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span>");
-            addDatePicker2($retest);
+
+            customTicket(index-2);
+            index ++;
         });
     }
 
@@ -43,13 +40,8 @@ $(document).ready(function() {
         // - le texte "__name__" qu'il contient par le numéro du champ
         var template = $container.attr('data-prototype')
                 //.replace(/__name__label__/g, "" )
-                .replace("<input","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><input")
                 .replace(/__name__/g, index)
-                .replace("<input type=\"text\" id=\"commande_tickets_"+index+"_surname\"","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><input type=\"text\" id=\"commande_tickets_"+index+"_surname\"")
-               .replace("<select id=\"commande_tickets_"+index+"_country\"","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><select id=\"commande_tickets_"+index+"_country\"")
-         //   .replace("<select id=\"commande_tickets_"+index+"_birth","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><select id=\"commande_tickets_"+index+"_birth")
-            .replace("<input type=\"text\" id=\"commande_tickets_"+index+"_birth","<div class=\"input-group col-xs-6\"><span class=\"input-group-addon\"><i class=\"fa fa-envelope\" aria-hidden=\"true\"></i></span><input type=\"text\" id=\"datepicker_"+index)
-            ;
+             ;
 
    // console.log(template);
 
@@ -61,9 +53,14 @@ $(document).ready(function() {
 
         // On ajoute le prototype modifié à la fin de la balise <div>
         $container.append($prototype);
+
         addDatePicker();
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         index++;
+
+        customTicket("_name");
+        customTicket("_surname");
+      //  $('.discount').closest('div[class^="checkbox"]').append('  <i class="fa fa-question-circle" aria-hidden="true"></i>');
 
     }
 
@@ -88,31 +85,34 @@ $(document).ready(function() {
         });
     }
 
-    function addDatePicker() {
-       // $(".birthtest").attr('id','datepicker_'+index);
+    function customTicket($var) {
+        $leChamp = $('input[id*=\"'+ $var + '\"]');
 
-        $("#datepicker_"+index).datepicker({
-            startView: 3,
-            language: "fr",
-            format: "dd/mm/yyyy",
-            autoclose: true
-        });
+        $leChamp = $leChamp.prev();
+        $leChamp.children(".fa-envelope").removeClass('fa-envelope').addClass('fa-user');
+
     }
-    function addDatePicker2() {
-    console.log($retest);
-        $("#datepicker_"+$retest).datepicker({
+    function addDatePicker() {
+
+        $varAcces = $(".birthtest").attr('id','datepicker_'+index);
+        $varAcces.datepicker({
+
+               language: $lang,
+               format: "dd/mm/yyyy",
+                startDate: '01/01/1900',
+                endDate: '-1d',
             startView: 3,
-            language: "fr",
-            format: "dd/mm/yyyy",
-            autoclose: true
-        });
-    }
+                autoclose: true,
+           });
+
+       }
+
 
 
 
     $("#commande_date").parent().attr('id','datepicker');
 
- $("#commande_date").hide();
+     $("#commande_date").hide();
 
     if (typeof $orderDate != 'undefined') {
         $orderDate = new Date($orderDate);
@@ -123,43 +123,10 @@ $(document).ready(function() {
         var $testDate = false;
     }
 
-
-   /*
-   $("#datepicker").datepicker({
-        dateFormat: 'dd/mm/yy',
-        minDate: 0,
-        maxDate: "+2Y",
-        firstDay:1,
-        defaultDate: $orderDate,
-        beforeShowDay: function(date) {
-            var day = date.getDay();
-            var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
-            return [(day != 2 && day != 0 && $joursOff.indexOf(string) == -1) ];
-        },
-        onSelect: function(dateText, inst) {
-            var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
-            var dateText1 = $.datepicker.formatDate("dd/mm/yy", date);
-            $("#commande_date").val(dateText1);
-            var $today = jQuery.datepicker.formatDate('dd/mm/yy',new Date());
-            if (dateText1 == $today) {
-            var $heure = new Date().getHours();
-            if ($heure >= 14) {
-                $('#commande_duree').prop('checked', true);
-                $('#commande_duree').attr('disabled', true);
-                 }
-            }
-            else {$('#commande_duree').removeAttr('disabled');
-                $('#commande_duree').prop('checked', false);}
-        },
-
-    }).attr("readonly","readonly");
-    $( "#datepicker" ).datepicker( "option",
-        $.datepicker.regional[$lang] );
-*/
     $("#datepicker").datepicker({
         format: "dd/mm/yyyy",
-        todayBtn: "linked",
         startDate: "today",
+        endDate: "+24m",
         language: $lang,
         daysOfWeekDisabled: "0,2",
         datesDisabled: $joursOff,
@@ -169,8 +136,6 @@ $(document).ready(function() {
         var date = event.format();
         var $today =  $.datepicker.formatDate('dd/mm/yy', new Date());
 
-        console.log(date);
-        console.log($today);
     if (date == $today) {
         var $heure = new Date().getHours();
         if ($heure >= 14) {
@@ -190,13 +155,6 @@ $(document).ready(function() {
         $('#datepicker').before("<div id='pbDate' class='col-sm-12 alert alert-danger'>" + $dateRequired + "</div>");
         $('#pbDate').delay(2000).hide("slow");
     });
-
-    $('.ui-state-highlight').removeClass('ui-state-highlight');
-    if (!$testDate) {
-    $('.ui-state-active').removeClass('ui-state-active');
-    $('.ui-state-hover').removeClass('ui-state-hover');
-    }
-
 
     var $stopAffiche = 0;
 
@@ -220,8 +178,7 @@ $(document).ready(function() {
         $('#commande_duree').removeAttr('disabled');
     });
 
- $('.duree').closest('div[class^="checkbox"]').append('  <i class="fa fa-question-circle" aria-hidden="true"></i>');
-
+    $('#datepicker > span').remove();
 
 
 });

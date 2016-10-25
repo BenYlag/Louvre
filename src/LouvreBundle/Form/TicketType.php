@@ -22,9 +22,11 @@ class TicketType extends AbstractType
         $builder
             ->add('name', TextType::class, array(
                 'label' => 'ticket.name',
+                'label_attr' => array('class' => 'nameTicket'),
             ))
             ->add('surname', TextType::class, array(
                 'label' => 'ticket.surname',
+                'label_attr' => array('class' => 'surname'),
             ))
             ->add('birth', DateType::class, array(
                 'widget' => 'single_text',
@@ -42,6 +44,7 @@ class TicketType extends AbstractType
             ->add('country', CountryType::class, array(
                 'preferred_choices' => array('FR', 'GB', 'DE', 'ES'),
                 'label' => 'ticket.country',
+                 'label_attr' => array('class' => 'country'),
             ))
             ->add('discount', CheckboxType::class, array(
                 'required' => false,

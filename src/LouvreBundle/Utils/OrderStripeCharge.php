@@ -27,7 +27,7 @@ class OrderStripeCharge
                 "amount" => $orderAmount, // Amount in cents
                 "currency" => "eur",
                 "source" => $token,
-                "description" => $commande->getName(),
+                "descriptio" => $commande->getName(),
             ));
             $status = "ok";
         } catch(\Stripe\Error\Card $e) {

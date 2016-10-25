@@ -1,5 +1,20 @@
 {%  extends "LouvreBundle:home:index.html.twig" %}
 
+{% block icones %}
+    <div class="col-xs-4 icones ">
+          <i id="order" class="fa fa-ticket fa-2x" aria-hidden="true"></i>
+    </div>
+    <div class="col-xs-4 icones">
+          <i id="validate" class="fa fa-check fa-2x" aria-hidden="true"></i>
+    </div>
+    <div class="col-xs-4 icones">
+         <i id="pay" class="fa fa-euro fa-2x" aria-hidden="true"></i>
+    </div>
+
+
+
+
+{% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-xs-12" id="recap">
@@ -11,12 +26,6 @@
             <br/>
             {{ commande.date|date('d/m/Y') }}
             <br/>
-          {#  {% if not commande.duree %}
-                {{ "Full day"|trans }}
-            {% else %}
-                {{ "Half-day"|trans }}
-            {% endif %}
-            #}
             {{ commande.duree? "Half-day"|trans: "Full day"|trans }}
 
             <br/>
@@ -120,5 +129,35 @@
             $('.row .corps').addClass('col-lg-offset-1');
         });
 
+
+        var $status = "{{ commande.status }}";
+        switch ($status) {
+            case "started":
+                $('#validate').parent().addClass('active');
+                $('#order').addClass('green');
+                $('#pay').addClass('desactive');
+                break;
+            case "modified":
+                $('#validate').parent().addClass('active');
+                $('#order').addClass('green');
+                $('#pay').addClass('desactive');
+                break;
+            case "pay_success":
+                $('#order').addClass('green');
+                $('#validate').addClass('green');
+                $('#pay').addClass('green');
+                break;
+
+            case "pay_failed":
+                $('#order').addClass('green');
+                $('#validate').addClass('green');
+                $('#pay').addClass('red');
+                break;
+            default:
+
+                $('#validate').addClass('desactive');
+                $('#pay').addClass('desactive');
+                break;
+        }
     </script>
 {% endblock %}
