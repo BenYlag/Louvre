@@ -152,8 +152,16 @@ $(document).ready(function() {
     });
 
     $('#commande_date').on("invalid", function(e) {
-        $('#datepicker').before("<div id='pbDate' class='col-sm-12 alert alert-danger'>" + $dateRequired + "</div>");
+        if (!$('#pbDate').length) {
+
+
+        $('#datepicker').parent().append("<div id='pbDate' class='col-sm-12 alert alert-danger'>" + $dateRequired + "</div>");
         $('#pbDate').delay(2000).hide("slow");
+        }
+        else {
+            $('#pbDate').show("slow");
+            $('#pbDate').delay(2000).hide("slow");
+        }
     });
 
     var $stopAffiche = 0;

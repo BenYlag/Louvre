@@ -26,7 +26,7 @@ class LouvreController extends Controller
     public function indexAction(Request $request)
     {
         $locale = $request->getLocale();
-        return $this->render('LouvreBundle:home:index.html.twig', array('locale' => $locale,'pageTitle' => ""));
+        return $this->render('LouvreBundle:home:index.html.twig', array('locale' => $locale));
     }
 
     /**
@@ -40,13 +40,13 @@ class LouvreController extends Controller
                 $orderEmail = $data['orderEmail'];
                 $commande =  $this->getDoctrine()->getRepository('LouvreBundle:Commande')->findOneBy(array ('name' => "$orderName", 'email' => "$orderEmail"));
                 if (!$commande) {
-                    return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order", 'error' => 'erreur'));
+                    return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'error' => 'erreur'));
                 }
                 else {
                 return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
                 }
         }
-        return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView(), 'pageTitle' => "Find my order"));
+        return $this->render('LouvreBundle:order:consult.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -70,10 +70,10 @@ class LouvreController extends Controller
             }
             $em->persist($commande);
             $em->flush();
-            return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName(),'pageTitle' => "Synthese"));
+            return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
         }
         $daysOff = $this->get('louvre.daysoff')->daysOff();
-        return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'daysoff' => $daysOff, 'pageTitle' => "Order"));
+        return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'daysoff' => $daysOff));
     }
 
     /**
@@ -106,11 +106,11 @@ class LouvreController extends Controller
             $em->persist($commande);
             $em->flush();
 
-            return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName(), 'pageTitle' => "Synthese"));
+            return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
         }
         $daysOff = $this->get('louvre.daysoff')->daysOff();
 
-        return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'commande' => $commande, 'daysoff' => $daysOff,'pageTitle' => "Edit Order"));
+        return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'commande' => $commande, 'daysoff' => $daysOff));
     }
 
 
@@ -137,6 +137,6 @@ class LouvreController extends Controller
             $em->persist($commande);
             $em->flush();
         }
-        return $this->render('LouvreBundle:order:second.html.twig', array('commande' => $commande, 'orderAmount'=> $orderAmount, 'pageTitle' => "Synthese"));
+        return $this->render('LouvreBundle:order:second.html.twig', array('commande' => $commande, 'orderAmount'=> $orderAmount));
     }
 }
