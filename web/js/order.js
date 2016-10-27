@@ -30,7 +30,7 @@ $(document).ready(function() {
         $container.children('div').each(function() {
            // console.log(index);
             addDeleteLink($(this));
-
+            addDatePicker();
             customTicket(index-2);
             index ++;
         });
@@ -109,6 +109,7 @@ $(document).ready(function() {
                 startDate: '01/01/1900',
                 endDate: '-1d',
             startView: 3,
+            defaultViewDate: { year: 1977, month: 04, day: 25 },
                 autoclose: true,
            });
 
