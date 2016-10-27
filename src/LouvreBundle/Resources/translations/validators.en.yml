@@ -1,0 +1,13 @@
+ticket:
+  error:
+    minName: "2 chars at least"
+    minSurname: "2 chars at least"
+
+
+order:
+  error:
+    email:  "The address {{ value }} is not valid"
+    maxdate: "Can not book more than 2 years before"
+    tuesday: "Museum is closed on Tuesday"
+    hour: "After 2 p.m., a half-day ticket has to be chosen"
+    tickets: "The order must a least have one ticket"

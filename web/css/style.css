@@ -17,11 +17,18 @@ body, caption {
 #options {
     text-align: center;
     display: flex;
-   flex-direction: column;
+/*  flex-direction: column;*/
     justify-content: center;
-    margin-top:20px;
+    margin:20px;
+}
 
+#options2 {
+    text-align: center;
 
+    margin:20px;
+}
+#options a {
+    margin-right: 20px;
 }
 
 #recap {
@@ -49,11 +56,14 @@ body, caption {
 .footer {
     height:20px;
 }
+
+.footer p {
+    margin: 0px;
+}
 .corps {
     height:calc(100vh - 80px);
-    overflow: scroll;
+    overflow: auto;
     background-color: rgba(0,0,0,0.5);
-
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -80,6 +90,7 @@ body {
     color: white;
     width: 100%;
 }
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -114,6 +125,9 @@ h1{
     display: none;
 }
 
+#recap td {
+    color: white;
+}
 
 .interieur {
     display:flex;

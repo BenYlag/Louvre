@@ -1,1 +1,13 @@
-order.error.email:  "L'adresse {{ value }} n'est pas valide..."
+ticket:
+  error:
+    minName: "Minimum 2 caractères"
+    minSurname: "Minimum 2 caractères"
+
+
+order:
+  error:
+    email:  "L'adresse {{ value }} n'est pas valide..."
+    maxdate: "Il n'est pas possible de réserver plus de 2 ans avant"
+    tuesday: "Le mardi, le musée est fermé"
+    hour: "Après 14h, il faut prendre un billet demi-journée"
+    tickets: "La commande doit au moins contenir un billet"

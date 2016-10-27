@@ -76,9 +76,10 @@ $(document).ready(function() {
         // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
         $deleteLink.click(function(e) {
             if (($('div#commande_tickets > div').length) > 1) {
-
                 $prototype.remove();
-            } else {   $("#supprimer").modal('show');}
+            }
+            else {
+                $("#supprimer").modal('show');}
 
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;

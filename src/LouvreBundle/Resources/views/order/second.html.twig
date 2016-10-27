@@ -71,16 +71,15 @@
 
         </div>
     </div>
-<div class="row" id="options">
-    <div class="col-xs-offset-3 col-xs-6">
+
 
     {% if commande.status != 'pay_success'%}
-        <a href="{{ path('editOrder', {'name': commande.name}) }}" class="btn btn-warning btn-block">{{ "Edit my order"|trans }}</a>
-
-    <br/>
-    <form action="./{{ commande.name }}" method="post">
+        <div class="col-xs-12" id="options">
+        <a id="editOrder" href="{{ path('editOrder', {'name': commande.name}) }}" class="btn btn-warning">{{ "Edit my order"|trans }}</a>
+    <form name="payerStripe" action="./{{ commande.name }}" method="post">
         <input
                 id="payerStripe"
+                name="payerStripe"
                 class="btn btn-success"
                 type="submit"
                 value="{{ "paiement"|trans }}"
@@ -94,16 +93,18 @@
 
         />
     </form>
-
+        </div>
     {% else %}
+        <div class="col-xs-12" id="options2">
         {{ 'order.payed'|trans }}
-
+        <br/>
         {% set order_resume = path('resumeOrder', {'name': commande.name}) %}
         <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ order_resume }}" />
         <br/>
-        <a href="{{ path('home') }}" class="btn btn-success btn-block" >{{ "Home"|trans }}</a>
+        <a href="{{ path('home') }}" class="btn btn-success" >{{ "Home"|trans }}</a>
+        </div>
     {% endif %}
-</div>
+
     </div>
 {% endblock %}
 

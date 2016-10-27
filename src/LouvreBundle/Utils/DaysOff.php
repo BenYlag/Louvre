@@ -68,5 +68,8 @@ class DaysOff
         if ($maintenant > 16) {
           array_push($daysOff, date_format($aujourdhui, 'd/m/Y'));
         return $daysOff;
-    }}
+    }
+    //dump($daysOff);
+        return $daysOff;
+    }
 }

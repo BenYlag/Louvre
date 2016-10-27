@@ -1,0 +1,58 @@
+Sitemap: "Sitemap"
+Legals: "Legals"
+'Order tickets': 'Order tickets'
+'Consult my order': 'Consult my order'
+'Contact us': 'Contact us'
+'Your Order number': 'Your order number'
+'Your Email': 'Your email'
+Search: "Search"
+"Nous ne trouvons pas de commande avec cette combinaison.\n        Vérifiez les informations saisies ou contactez-nous...": "We can't find any order with these informations. Please check your input or contact us."
+order.date: "Date"
+order.email: "Email"
+order.duree: "Half-day"
+order.tickets: "Tickets"
+'Add a ticket': 'Add a ticket'
+Next: 'Next'
+Discount: 'Discount'
+"Afin de bénéficier d'un tarif réduit, chaque visiteur doit pouvoir présenter un justificatif de sa situation.<br/>\n                    Le tarif réduit est attribué aux personnes suivantes : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…": " In order to get a discount you have to justifiy of your situation.<br/>\n                    Discount price is given for : students, museum's employee, Ministry of Culture worker, military worker…"
+'Don''t show again': 'Do not show again'
+Close: 'Close'
+Half-day: 'Half-day'
+'En choisissant la formule demi-journée, l''entrée au musée ne se fera qu''a partir de 14h.': 'If you choose the half-day formula, you won''be able to get in the museum before 2 p.m.'
+'Delete this ticket': 'Delete this ticket'
+'The date is required': 'The date is required'
+'Your order summary :': 'Your order summary'
+'Full day': 'Full day'
+'Tickets in your order': 'Tickets in your order'
+Name: "Name"
+Surname: "Surname"
+Country: "Country"
+Pricing: "Pricing"
+Price: "Price"
+Total: "Total"
+'Edit my order': 'Edit my order'
+paiement: "Pay my order"
+order.payed: "Order payed and validated"
+Home: "Home"
+ticket.name: "Name"
+ticket.surname: "Surname"
+ticket.birth: "Birth"
+ticket.country: "Country"
+ticket.discount: "Discount "
+Order: "Order"
+Date: "Date"
+Email: "Email"
+'Demi-journée': "Half-day "
+Billets: "Tickets"
+Delete: "Delete"
+'La commande doit au moins contenir un billet.': "The order must a least have one ticket."
+'__name__label__': '__name__label__'
+'Find my order': 'Find my order'
+'order.name': 'Order reference'
+'Synthese': "Synthesis"
+'senior': "Senior"
+'normal': "Normal"
+'reduit': "Discount"
+'gratuit': "Free"
+'enfant': "Child"
+'Edit Order': "Edit order"
