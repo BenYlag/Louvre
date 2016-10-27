@@ -19,7 +19,7 @@ $(document).ready(function() {
     });
 
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-    if ((index == 0)&&(testIndex != 1)) {
+    if (index == 0) {
         addTicket($container);
         var $deleteBouton = 0;
         //deleteButton();
