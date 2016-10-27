@@ -108,9 +108,12 @@ class LouvreController extends Controller
 
             return $this->redirectToRoute('resumeOrder', array('name' => $commande->getName()));
         }
+
+        if (($commande->getStatus() != "pay_success")) {
         $daysOff = $this->get('louvre.daysoff')->daysOff();
 
         return $this->render('LouvreBundle:order:first.html.twig', array('form' => $form->createView(), 'commande' => $commande, 'daysoff' => $daysOff));
+    } else { return $this->redirectToRoute('home'); }
     }
 
 

@@ -169,7 +169,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/locales/bootstrap-datepicker.{{ app.request.getLocale() }}.min.js"></script>
 
-   <script src="{{ asset('js/order.js') }}"></script>
+
 
 <script>
     var $joursOff = {{ daysoff|json_encode()|raw}};
@@ -192,6 +192,10 @@
     $('#validate').addClass('desactive');
 
 
+
 </script>
+
+    <script src="{{ asset('js/order.js') }}"></script>
+
 
 {% endblock %}

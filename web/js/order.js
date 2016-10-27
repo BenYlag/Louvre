@@ -21,8 +21,11 @@ $(document).ready(function() {
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
     if ((index == 0)&&(testIndex != 1)) {
         addTicket($container);
+        var $deleteBouton = 0;
+        //deleteButton();
     }
     else {
+        var $deleteBouton = 1;
         // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
         $container.children('div').each(function() {
            // console.log(index);
@@ -79,7 +82,10 @@ $(document).ready(function() {
                 $prototype.remove();
             }
             else {
-                $("#supprimer").modal('show');}
+
+
+                $("#supprimer").modal('show');
+            }
 
             e.preventDefault(); // évite qu'un # apparaisse dans l'URL
             return false;
@@ -188,6 +194,27 @@ $(document).ready(function() {
     });
 
     $('#datepicker > span').remove();
+
+
+   // console.log($('#commande_tickets > *').length);
+
+    $test = $('.delete').length;
+    if ($test == 1) {
+        $('.delete').remove();
+    }
+   // console.log($test);
+
+    //console.log($('#commande_tickets > *').length);
+    console.log( $deleteBouton);
+    $('#commande_tickets').bind("DOMSubtreeModified",function() {
+      //  console.log($('#commande_tickets > *').length);
+        $test = $('.delete').length;
+        if (($deleteBouton == 1) &&($test == 1) && (index!=2)) {
+            $('.delete').remove();
+            $deleteBouton = 0;
+        }
+
+    });
 
 
 });
