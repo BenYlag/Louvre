@@ -22,6 +22,17 @@ body, caption {
     margin:20px;
 }
 
+#retourHome {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 50px;
+}
+
+#leBouton{
+    margin: 50px;
+}
+
 #options2 {
     text-align: center;
 

@@ -96,12 +96,15 @@
         </div>
     {% else %}
         <div class="col-xs-12" id="options2">
+            <div class="col-xs-12 texteValidation">
+
         {{ 'order.payed'|trans }}
+                </div>
         <br/>
         {% set order_resume = path('resumeOrder', {'name': commande.name}) %}
         <img src="https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl={{ order_resume }}" />
         <br/>
-        <a href="{{ path('home') }}" class="btn btn-success" >{{ "Home"|trans }}</a>
+        <a id="leBouton" href="{{ path('home') }}" class="btn btn-success" >{{ "Home"|trans }}</a>
         </div>
     {% endif %}
 
