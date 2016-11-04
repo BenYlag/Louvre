@@ -1,0 +1,36 @@
+Sitemap: __Sitemap
+Legals: __Legals
+'Order tickets': 'Commander des billets'
+'Consult my order': '__Consult my order'
+'Contact us': '__Contact us'
+'Your Order number': '__Your Order number'
+'Your Email': '__Your Email'
+Search: __Search
+"Nous ne trouvons pas de commande avec cette combinaison.\n        Vérifiez les informations saisies ou contactez-nous...": "__Nous ne trouvons pas de commande avec cette combinaison.\n        Vérifiez les informations saisies ou contactez-nous..."
+order.date: __order.date
+order.email: __order.email
+order.duree: __order.duree
+order.tickets: __order.tickets
+'Add a ticket': '__Add a ticket'
+Next: __Next
+Discount: __Discount
+"Afin de bénéficier d'un tarif réduit, chaque visiteur doit pouvoir présenter un justificatif de sa situation.<br/>\n                    Le tarif réduit est attribué aux personnes suivantes : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…": "__Afin de bénéficier d'un tarif réduit, chaque visiteur doit pouvoir présenter un justificatif de sa situation.<br/>\n                    Le tarif réduit est attribué aux personnes suivantes : étudiant, employé du musée, d’un service du Ministère de la Culture, militaire…"
+'Don''t show again': '__Don''t show again'
+Close: __Close
+Half-day: __Half-day
+'En choisissant la formule demi-journée, l''entrée au musée ne se fera qu''a partir de 14h.': '__En choisissant la formule demi-journée, l''entrée au musée ne se fera qu''a partir de 14h.'
+'Delete this ticket': '__Delete this ticket'
+'The date is required': '__The date is required'
+'Your order summary :': '__Your order summary :'
+'Full day': '__Full day'
+'Tickets in your order': '__Tickets in your order'
+Name: __Name
+Surname: __Surname
+Country: __Country
+Pricing: __Pricing
+Price: __Price
+Total: __Total
+'Edit my order': '__Edit my order'
+paiement: __paiement
+order.payed: __order.payed
+Home: __Home
