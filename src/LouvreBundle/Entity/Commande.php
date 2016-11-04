@@ -40,7 +40,7 @@ class Commande
      *
      * @ORM\Column(name="email", type="string", length=255)
      * @Assert\Email(
-     *     checkMX = true,
+     *     checkHost = true,
      *     message = "order.error.email",
      *     )
      */
