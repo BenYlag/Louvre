@@ -15,4 +15,5 @@
 /vendor/
 /web/bundles/
 /web/config.php
-/.idea/
+/.idea/*
+/.idea

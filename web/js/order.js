@@ -206,7 +206,7 @@ $(document).ready(function() {
    // console.log($test);
 
     //console.log($('#commande_tickets > *').length);
-    console.log( $deleteBouton);
+   // console.log( $deleteBouton);
     $('#commande_tickets').bind("DOMSubtreeModified",function() {
       //  console.log($('#commande_tickets > *').length);
         $test = $('.delete').length;
