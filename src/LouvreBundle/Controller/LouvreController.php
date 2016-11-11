@@ -3,7 +3,6 @@
 namespace LouvreBundle\Controller;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use LouvreBundle\Form\TicketType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response as Response;
@@ -27,6 +26,15 @@ class LouvreController extends Controller
     {
         $locale = $request->getLocale();
         return $this->render('LouvreBundle:home:index.html.twig', array('locale' => $locale));
+    }
+
+
+    /**
+     * @Route("/contact", name="contact")
+     */
+    public function contactAction(Request $request)
+    {
+        return $this->render('LouvreBundle:home:contact.html.twig');
     }
 
     /**
@@ -142,4 +150,7 @@ class LouvreController extends Controller
         }
         return $this->render('LouvreBundle:order:second.html.twig', array('commande' => $commande, 'orderAmount'=> $orderAmount));
     }
+
+
+
 }

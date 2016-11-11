@@ -1,0 +1,13 @@
+{%  extends "LouvreBundle:home:index.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <p>{{ "Contact"|trans }}</p>
+    <a id="leBouton" href="{{ path('home') }}" class="btn btn-success" >{{ "Home"|trans }}</a>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

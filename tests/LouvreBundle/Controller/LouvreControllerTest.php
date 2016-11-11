@@ -67,7 +67,7 @@ class LouvreControllerTest extends WebTestCase
         $form = $buttonCrawlerNode->form();
 
 
-        $form['commande[date]'] = '28/10/2016';
+        $form['commande[date]'] = '15/05/2017';
         $form['commande[email]'] = 'contact@blagache.com';
 
         $values = $form->getPhpValues();
@@ -77,10 +77,10 @@ class LouvreControllerTest extends WebTestCase
         $values['commande']['tickets'][0]['birth'] = '31/08/1982';
         $values['commande']['tickets'][0]['country'] = 'FR';
 
-        $crawler = $client->request($form->getMethod(), $form->getUri(), $values,
-            $form->getPhpFiles());
-        $crawler = $client->followRedirect();
-        // dump($crawler);
+        $crawler = $client->request($form->getMethod(), $form->getUri(), $values, $form->getPhpFiles());
+   // dump($crawler);
+       $crawler = $client->followRedirect();
+
         if ($this->assertEquals(1, $crawler->filter('html:contains("Récapitulatif")')->count())) {
             echo 'Formulaire validé - >page recapitulatif';
         }

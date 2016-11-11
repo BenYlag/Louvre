@@ -5,12 +5,6 @@ $(document).ready(function() {
     // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
     var $container = $('div#commande_tickets');
 
-    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-
-   // var index = $('div#commande_tickets > div').length;
-    //$container.find(':input').length;
-
-
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
     $('#add_ticket').click(function(e) {
         addTicket($container);

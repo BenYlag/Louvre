@@ -18,9 +18,6 @@ class OrderStripeCharge
         // See your keys here: https://dashboard.stripe.com/account/apikeys
         \Stripe\Stripe::setApiKey($this->stripekey);
 
-        // Get the credit card details submitted by the form
-
-
         // Create a charge: this will charge the user's card
         try {
             \Stripe\Charge::create(array(

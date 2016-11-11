@@ -4,21 +4,6 @@
 {% endblock %}
 
 {% block body %}
-    {#
-<div class="row" >
-    <div class="col-xs-12" id="searchOrder">
-<form method="post">
-    <label for="textinput">{{ "Your Order number"|trans }}</label>
-    <br/>
-    <input id="textinput" name="name" type="text">
-    <br/>
-    <label for="email">{{ "Your Email"|trans }}</label>
-    <br/>
-    <input id="email" name="email" type="email">
-    <br/>
-    <input type="submit" value="{{ "Search"|trans }}" class="btn btn-success">
-</form></div></div>
-#}
     {{ form_start(form) }}
     {{ form_widget(form) }}
     <input id="submit" type="submit" value="{{ "Search"|trans }}" class="btn btn-success">

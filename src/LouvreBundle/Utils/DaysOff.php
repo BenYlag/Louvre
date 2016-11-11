@@ -16,25 +16,30 @@ class DaysOff
     }
     public function joursFeries($annee)
     {
-        /* URL            : http://www.phpsources.org/scripts641-PHP.htm  */
-        $dimanche_paques = date("d-m-Y", easter_date($annee));
-        $lundi_paques = date("d/m/Y", strtotime("$dimanche_paques +1 day"));
-        $jeudi_ascension = date("d/m/Y", strtotime("$dimanche_paques +39 day"));
-        $lundi_pentecote = date("d/m/Y", strtotime("$dimanche_paques +50 day"));
+        /* URL            : http://www.phpsources.org/scripts641-PHP.htm
+       french daysOff, just in case of re-use...
+            $dimanche_paques = date("d-m-Y", easter_date($annee));
+            $lundi_paques = date("d/m/Y", strtotime("$dimanche_paques +1 day"));
+            $jeudi_ascension = date("d/m/Y", strtotime("$dimanche_paques +39 day"));
+            $lundi_pentecote = date("d/m/Y", strtotime("$dimanche_paques +50 day"));
+        */
 
         $jours_feries = array(
-           // date("d/m/Y", strtotime($dimanche_paques)),
-          //  $lundi_paques,
-          //  $lundi_pentecote,
-         //   $jeudi_ascension,
-          //  "01/01/$annee",
             "01/05/$annee",
-          //  "08/05/$annee",
-       //     "15/05/$annee",
-       //     "14/07/$annee",
-        //    "11/11/$annee",
             "01/11/$annee",
             "25/12/$annee",
+
+            /* Other french daysOff, just in case of re-use...
+            date("d/m/Y", strtotime($dimanche_paques)),
+           $lundi_paques,
+            $lundi_pentecote,
+            $jeudi_ascension,
+            "01/01/$annee",
+            "08/05/$annee",
+            "15/05/$annee",
+            "14/07/$annee",
+            "11/11/$annee",
+            */
         );
 
         return $jours_feries;
@@ -69,7 +74,6 @@ class DaysOff
           array_push($daysOff, date_format($aujourdhui, 'd/m/Y'));
         return $daysOff;
     }
-    //dump($daysOff);
         return $daysOff;
     }
 }
