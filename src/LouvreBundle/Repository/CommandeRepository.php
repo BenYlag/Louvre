@@ -34,7 +34,7 @@ class CommandeRepository extends EntityRepository
             ->groupBy('a.date')
             ->having('COUNT(a) > :count AND a.date > :now')
             ->setParameter('count', $limit)
-            ->setParameter('now', new \DateTime('now'));
+            ->setParameter('now', new \DateTime('yesterday'));
         return $qb->getQuery()->getResult();
         }
 }
